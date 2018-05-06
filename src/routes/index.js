@@ -4,6 +4,7 @@ import { Router, Scene } from 'react-native-router-flux'
 
 import FarkList from '../modules/farkList/FarkList'
 import FarkAdd from '../modules/farkAdd/FarkAdd'
+import User from '../modules/user/User'
 
 const TabIcon = ({ selected, title }) => {
   return (
@@ -19,8 +20,11 @@ const App = () => {
           <Scene key="list" title={'List'} icon={TabIcon}>
             <Scene key="farkList" title={'FARK LIST'} component={FarkList}/>
           </Scene>
-          <Scene key="user" title={'User'} icon={TabIcon}>
+          <Scene key="add" title={'User'} icon={TabIcon}>
             <Scene key="farkAdd" title={'FARK ADD'} component={FarkAdd}/>
+          </Scene>
+          <Scene key="user" title={'User'} icon={TabIcon}>
+            <Scene key="userpage" title={'USER'} component={User}/>
           </Scene>
         </Scene>
       </Scene>
