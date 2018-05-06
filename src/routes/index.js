@@ -1,14 +1,28 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { Text } from 'react-native';
 import { Router, Scene } from 'react-native-router-flux'
+
 import FarkList from '../modules/farkList/FarkList'
 import FarkAdd from '../modules/farkAdd/FarkAdd'
+
+const TabIcon = ({ selected, title }) => {
+  return (
+    <Text style={{color: selected ? 'red' :'black'}}>{title}</Text>
+  );
+}
 
 const App = () => {
   return (
     <Router>
       <Scene key="root">
-        <Scene key="farkList" component={FarkList} hideNavBar={1} panHandlers={null} hideTabBar={1} direction='vertical' initial/>
-        <Scene key="farkAdd" component={FarkAdd} hideNavBar={1} panHandlers={null} hideTabBar={1} direction='vertical'/>
+        <Scene key="tabbar" tabs={true} hideNavBar tabBarStyle={{ backgroundColor: '#FFFFFF' }}>
+          <Scene key="list" title={'List'} icon={TabIcon}>
+            <Scene key="farkList" title={'FARK LIST'} component={FarkList}/>
+          </Scene>
+          <Scene key="user" title={'User'} icon={TabIcon}>
+            <Scene key="farkAdd" title={'FARK ADD'} component={FarkAdd}/>
+          </Scene>
+        </Scene>
       </Scene>
     </Router>
   )
