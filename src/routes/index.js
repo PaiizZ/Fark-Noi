@@ -47,7 +47,7 @@ const App = () => {
           </Scene>
         </Scene> */}
 				<Tabs hideNavBar>
-					<Scene key="list" title={'List'}> 
+					<Scene key="list" title={'List'} iconName="ios-list" icon={TabIcon}> 
 						<Scene key="farkList" title={'FARK LIST'} component={FarkList}/>
 					</Scene>
 					<Scene key="add" title={'Add'}>
