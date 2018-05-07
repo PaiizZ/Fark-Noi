@@ -50,7 +50,7 @@ const App = () => {
 					<Scene key="list" title={'List'} iconName="ios-list" icon={TabIcon}> 
 						<Scene key="farkList" title={'FARK LIST'} component={FarkList}/>
 					</Scene>
-					<Scene key="add" title={'Add'}>
+					<Scene key="add" title={'Add'} initial>
 						<Scene key="farkAdd" title={'FARK ADD'} component={FarkAdd}/>
 					</Scene>
 					<Scene key="user" title={'User'}>
