@@ -14,16 +14,18 @@ class NavBar extends Component {
 		const { titleName } = this.props
 		return (
 			<View style={styles.navBar} >
-				<View style={{ flex: 1, alignItems: 'center', flexDirection: 'row'}} >
+				<View style={{ flex: 3, alignItems: 'center', flexDirection: 'row'}} >
 					<TouchableOpacity 
 						style={{ width: 50, alignItems: 'center', justifyContent: 'center'}} 
-						onPress={() => { Actions.farkList() }}
+						onPress={() => { 
+							Actions.tabMenu()
+						}}
 					>
 						<IconIonicons name='ios-arrow-back' size={30} color={'#777'} />
 					</TouchableOpacity>
-					<View style={{ flex: 1 }}>
-						<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#777' }}>{ titleName }</Text>
-					</View>
+				</View>
+				<View style={{ flex: 5, alignItems: 'flex-start', justifyContent: 'center' }}>
+					<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#777' }}>{ titleName }</Text>
 				</View>
 			</View>
 		)

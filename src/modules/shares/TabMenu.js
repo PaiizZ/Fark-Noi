@@ -5,7 +5,8 @@ import User from '../user/User'
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome'
 import IconMaterialCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
 import TabNavigator from 'react-native-tab-navigator'
- 
+import { Actions } from 'react-native-router-flux'
+
 const deviceWidth = Dimensions.get('window').width
 const basePx = 375
  

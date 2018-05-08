@@ -15,15 +15,17 @@ class NavBar extends Component {
 		return (
 			<View style={styles.navBar} >
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}} >
-					<View style={{ flex: 1 }}>
+					<View style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'center' }}>
 						<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#777' }}>{ titleName }</Text>
 					</View>
-					<TouchableOpacity 
-						style={{ width: 50, alignItems: 'center', justifyContent: 'center'}} 
-						onPress={() => { Actions.farkAdd() }}
-					>
-						<IconEntypo name='plus' size={30} color={'blue'} />
-					</TouchableOpacity>
+					<View style={{ flex: 3, alignItems: 'flex-end', justifyContent: 'center'}}>
+						<TouchableOpacity 
+							style={{ width: 50, alignItems: 'center', justifyContent: 'center'}} 
+							onPress={() => { Actions.farkAdd() }}
+						>
+							<IconEntypo name='plus' size={30} color={'blue'} />
+						</TouchableOpacity>
+					</View>
 				</View>
 			</View>
 		)
