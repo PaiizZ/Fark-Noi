@@ -1,11 +1,14 @@
 import { Dimensions, StyleSheet } from 'react-native'
 import React, { Component } from 'react'
 import FarkList from '../farkList/FarkList'
-import User from '../user/User'
+import UserPage from '../user/UserPage'
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome'
 import IconMaterialCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
 import TabNavigator from 'react-native-tab-navigator'
 import { Actions } from 'react-native-router-flux'
+import { auth } from '../../constant/firebase'
+import UserActions from '../../redux/actions/user'
+import { connect } from 'react-redux'
 
 const deviceWidth = Dimensions.get('window').width
 const basePx = 375
@@ -21,6 +24,23 @@ export class TabMenu extends Component {
  
 	componentDidMount() {
 		console.disableYellowBox = true
+		this.setCurrentUser()
+	}
+
+	setCurrentUser() {
+		auth.onAuthStateChanged((user) => {
+			if (user !== null) {
+				const user_obj = {
+					uid: user.uid,
+					displayName: user.displayName,
+					photoURL: user.photoURL 
+				}
+				this.props.setCurrentUser(user_obj)
+			}
+			else {
+				Actions.loginpage()
+			}
+		})
 	}
 
 	px2dp(px) {
@@ -58,7 +78,7 @@ export class TabMenu extends Component {
 						<IconFontAwesome name="user" size={this.px2dp(22)} color={'blue'} />
 					)}
 				>
-					<User/>
+					<UserPage/>
 				</TabNavigator.Item>
 			</TabNavigator>
 		)
@@ -74,4 +94,10 @@ const styles = StyleSheet.create({
 	}
 })
  
-export default TabMenu
+const mapDispatchToProps = dispatch => ({
+	setCurrentUser: user => {
+		dispatch(UserActions.setCurrentUser(user))
+	}
+})
+
+export default connect(null, mapDispatchToProps)(TabMenu)

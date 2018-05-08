@@ -24,7 +24,7 @@ export default class FarkList extends Component {
 					</View>
 				</View>
 				<View style={styles.body}>
-					<List containerStyle={{ borderColor: 'transparent', marginTop: 0 }}>
+					<List containerStyle={{ borderColor: 'transparent' }}>
 						{farklist.farklist.map((fark, index) => {
 							return (
 								<ListItem
