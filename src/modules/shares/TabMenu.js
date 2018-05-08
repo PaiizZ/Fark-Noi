@@ -38,7 +38,7 @@ export class TabMenu extends Component {
 				this.props.setCurrentUser(user_obj)
 			}
 			else {
-				Actions.loginpage()
+				Actions.loginPage()
 			}
 		})
 	}

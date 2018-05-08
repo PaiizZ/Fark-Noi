@@ -3,6 +3,7 @@ import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native
 import farklist from '../../constant/farklist'
 import { List, ListItem, Divider } from 'react-native-elements'
 // import Tabs from '../shares/Tabs'
+import { Actions } from 'react-native-router-flux'
 import CoverImage from '../shares/CoverImage'
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -22,7 +23,7 @@ class UserPage extends Component {
 						<MaterialIcons
 							name="settings"
 							size={25}
-							// onPress={() => this.goToSettingPage()}
+							onPress={() => Actions.settingPage()}
 						/>
 					</TouchableOpacity>
 					<View style={{justifyContent: 'center', alignItems: 'center'}}>
