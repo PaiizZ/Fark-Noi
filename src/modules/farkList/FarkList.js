@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import NavBar from '../farkList/components/NavBar'
-
-// import Ionicons from 'react-native-vector-icons/Ionicons'
-
 export default class FarkList extends Component {
 	render() {
 		return (
