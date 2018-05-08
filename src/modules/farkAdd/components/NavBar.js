@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 		zIndex: 1,
 		backgroundColor: 'white',
 		borderBottomColor: '#f1f1f1',
-		borderBottomWidth: 3
+		borderBottomWidth: 2
 		// shadowColor: '#808080',
 		// shadowOffset: { width: 0, height: 5 },
 		// shadowOpacity: 0.5
