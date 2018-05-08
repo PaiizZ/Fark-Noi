@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View } from 'react-native'
+import NavBar from '../farkList/components/NavBar'
 
 // import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -7,9 +8,14 @@ export default class FarkList extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text style={styles.welcome}>
-          Welcome to FarkList!
-				</Text>
+				<View style={styles.header}>
+					<View style={styles.platformHeader}>
+						<NavBar titleName="FRAK LIST" />
+					</View>
+				</View>
+				<View style={styles.body}>
+					<Text>Welcome to FarkList!</Text>
+				</View>
 			</View>
 		)
 	}
@@ -18,13 +24,19 @@ export default class FarkList extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF'
+		backgroundColor: 'white'
 	},
-	welcome: {
-		fontSize: 20,
-		textAlign: 'center',
-		margin: 10
+	body: {
+		marginTop: Platform.OS === 'ios' ? 75 : 60
+	},
+	platformHeader: {
+		height: Platform.OS === 'ios' ? 75 : 60,
+		paddingTop: Platform.OS === 'ios' ? 25 : 0
+	},
+	header: {
+		position: 'absolute',
+		left: 0,
+		right: 0,
+		top: 0
 	}
 })

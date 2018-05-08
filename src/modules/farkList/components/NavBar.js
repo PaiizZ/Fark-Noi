@@ -7,28 +7,23 @@ import {
 } from 'react-native'
 
 import { Actions } from 'react-native-router-flux'
-import IconIonicons from 'react-native-vector-icons/Ionicons'
-import { colors } from 'src/constants/mixins'
+import IconEntypo from 'react-native-vector-icons/Entypo'
 
 class NavBar extends Component {
 	render () {
 		const { titleName } = this.props
 		return (
 			<View style={styles.navBar} >
-				<View style={{ flex: 1, alignItems: 'center', flexDirection: 'row'}} >
+				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}} >
+					<View style={{ flex: 1 }}>
+						<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#777' }}>{ titleName }</Text>
+					</View>
 					<TouchableOpacity 
 						style={{ width: 50, alignItems: 'center', justifyContent: 'center'}} 
-						onPress={
-							() => {
-								Actions.pop()
-							}
-						}
+						onPress={() => { Actions.farkAdd() }}
 					>
-						<IconIonicons name='ios-arrow-back' size={30} color={colors.gray} />
+						<IconEntypo name='plus' size={30} color={'blue'} />
 					</TouchableOpacity>
-					<View style={{ flex: 1 }}>
-						<Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.gray }}>{ titleName }</Text>
-					</View>
 				</View>
 			</View>
 		)
@@ -41,12 +36,12 @@ const styles = StyleSheet.create({
 		justifyContent: 'center', 
 		flexDirection: 'row',
 		zIndex: 1,
-		backgroundColor: colors.white,
+		backgroundColor: 'white',
 		borderBottomColor: '#f1f1f1',
-		borderBottomWidth: 1,
-		shadowColor: '#808080',
-		shadowOffset: { width: 0, height: 5 },
-		shadowOpacity: 0.5
+		borderBottomWidth: 3
+		// shadowColor: '#808080',
+		// shadowOffset: { width: 0, height: 5 },
+		// shadowOpacity: 0.5
 	}
 })
 

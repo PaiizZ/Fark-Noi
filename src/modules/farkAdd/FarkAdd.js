@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, ScrollView, Text, View, TextInput, Switch, TouchableOpacity } from 'react-native'
+import { Platform, StyleSheet, ScrollView, Text, View, TextInput, Switch, TouchableOpacity } from 'react-native'
+import NavBar from '../farkAdd/components/NavBar'
 import IconMaterial from 'react-native-vector-icons/MaterialIcons'
 
 export default class FarkList extends Component {
@@ -33,7 +34,12 @@ export default class FarkList extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-      	<ScrollView
+				<View style={styles.header}>
+					<View style={styles.platformHeader}>
+						<NavBar titleName="FARK ADD" />
+					</View>
+				</View>
+				<ScrollView
 					showsVerticalScrollIndicator={false}
 					scrollEventThrottle={16}
 					bounces={false}
@@ -123,7 +129,17 @@ const styles = StyleSheet.create({
 		backgroundColor: 'white'
 	},
 	body: {
-		marginTop: 10
+		marginTop: Platform.OS === 'ios' ? 75 : 60
+	},
+	platformHeader: {
+		height: Platform.OS === 'ios' ? 75 : 60,
+		paddingTop: Platform.OS === 'ios' ? 25 : 0
+	},
+	header: {
+		position: 'absolute',
+		left: 0,
+		right: 0,
+		top: 0
 	},
 	label: {
 		color: '#5C5C5C',

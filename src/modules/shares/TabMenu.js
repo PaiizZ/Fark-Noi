@@ -18,6 +18,10 @@ export class TabMenu extends Component {
 		}
 	}
  
+	componentDidMount() {
+		console.disableYellowBox = true
+	}
+
 	px2dp(px) {
 		return px * deviceWidth / basePx
 	}
