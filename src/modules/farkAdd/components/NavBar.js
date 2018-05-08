@@ -18,7 +18,7 @@ class NavBar extends Component {
 					<TouchableOpacity 
 						style={{ width: 50, alignItems: 'center', justifyContent: 'center'}} 
 						onPress={() => { 
-							Actions.tabMenu()
+							Actions.pop()
 						}}
 					>
 						<IconIonicons name='ios-arrow-back' size={30} color={'#777'} />
