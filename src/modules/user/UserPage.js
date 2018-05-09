@@ -13,7 +13,7 @@ import { connect } from 'react-redux'
 class UserPage extends Component {
 	render() {
 		console.log(this.props.currentUser, 'currentUser')
-		if (!this.props.currentUser) {
+		if (!this.props.currentUser || !this.props.farks) {
 			return <View/>
 		}
 		return (
@@ -38,48 +38,49 @@ class UserPage extends Component {
 					<View style={{ alignItems: 'center' }}>
 						<Divider style={styles.divider} />
 					</View>
-	
-					<List containerStyle={{ borderColor: 'transparent'}}>
-						{farklist.farklist.map((fark, index) => {
+					<List containerStyle={{ borderColor: 'transparent' }}>
+						{this.props.farks.map((fark, index) => {
 							return (
-								<ListItem
-									avatar={
-										<CoverImage size={80} url={fark.creater.pic_url} />
-									}
-									containerStyle={{ borderBottomColor: 'transparent' }}
-									key={index}
-									title={fark.title}
-									titleStyle={{ fontWeight: 'bold', color: 'gray', marginLeft: 15 }}
-									titleNumberOfLines={1}
-									subtitle={
-										<View style={{ flexDirection: 'row', marginLeft: 15, bottom: 0}}>
-											<View>
-												<Text></Text>
-												<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-													<View style={{ flexDirection: 'row', marginRight: 15 }}>
-														<View style={styles.productDetailLeft}>
-															<IconEntypo name="shop" color={'gray'} size={26} />
-															<Text style={styles.productDetailText}>{fark.shop}</Text>
-														</View>
-														<View style={styles.productDetailRight}>
-															<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
-															<Text style={styles.productDetailText}>{fark.reciver}</Text>
+								this.props.currentUser.uid === fark.creater.uid && (
+									<ListItem
+										avatar={
+											<CoverImage size={80} uri={`${fark.creater.photoURL}`+'/picture?height=300'} />
+										}
+										containerStyle={{ borderBottomColor: 'transparent' }}
+										key={index}
+										title={fark.title}
+										titleStyle={{ fontWeight: 'bold', color: 'gray', marginLeft: 15 }}
+										titleNumberOfLines={1}
+										subtitle={
+											<View style={{ flexDirection: 'row', marginLeft: 15, bottom: 0}}>
+												<View>
+													<Text></Text>
+													<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+														<View style={{ flexDirection: 'row', marginRight: 15 }}>
+															<View style={styles.productDetailLeft}>
+																<IconEntypo name="shop" color={'gray'} size={26} />
+																<Text style={styles.productDetailText}>{fark.shop}</Text>
+															</View>
+															<View style={styles.productDetailRight}>
+																<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
+																<Text style={styles.productDetailText}>{fark.deliver}</Text>
+															</View>
 														</View>
 													</View>
 												</View>
+												{ fark.tipStatus &&(
+													<View>
+														<View style={styles.coin}>
+															<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
+														</View>
+													</View>)
+												}
 											</View>
-											{ fark.tip_status &&(
-												<View>
-													<View style={styles.productDetailRight}>
-														<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
-													</View>
-												</View>)
-											}
-										</View>
-									}
-									hideChevron={true}
-									// onPress={() => this.goToViewReviewPage(review)}
-								/>
+										}
+										hideChevron={true}
+										onPress={() => { Actions.farkView({ fark }) }}
+									/>
+								)
 							)
 						})
 						}
@@ -136,7 +137,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-	currentUser: state.userReducer.currentUser
+	currentUser: state.userReducer.currentUser,
+	farks: state.farkReducer.farks
 })
 
 const mapDispatchToProps = dispatch => ({
