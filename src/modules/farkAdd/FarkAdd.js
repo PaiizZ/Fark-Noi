@@ -69,6 +69,9 @@ class FarkAdd extends Component {
 	}
 
 	render() {
+		if (!this.props.currentUser) {
+			return <View/>
+		}
 		return (
 			<KeyboardAwareScrollView
 				style={{ backgroundColor: 'white' }}

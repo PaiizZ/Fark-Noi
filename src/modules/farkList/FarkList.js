@@ -16,6 +16,9 @@ class FarkList extends Component {
 	}
 
 	render() {
+		if (!this.props.currentUser || !this.props.farks) {
+			return <View/>
+		}
 		return (
 			<View style={styles.container}>
 				<View style={styles.header}>

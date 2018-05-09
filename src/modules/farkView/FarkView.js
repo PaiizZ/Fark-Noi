@@ -23,14 +23,27 @@ class FarkView extends Component {
 		)
 	}
   
+	deleteFark() {
+		this.props.deleteFark(this.props.fark.key)
+	}
+  
 	render() {
 		console.log(this.props.fark, 'xxx')
 		const { title, shop, deliver, note, tip, tipStatus, creater, doer, orders } = this.props.fark
+		if (!this.props.currentUser) {
+			return <View/>
+		}
 		return (
 			<View style={styles.container}>
 				<View style={styles.header}>
 					<View style={styles.platformHeader}>
-						<NavBar titleName="FARK VIEW" />
+						<NavBar 
+							titleName="FARK VIEW" 
+							currentUser={this.props.currentUser} 
+							creater={creater} 
+							doer={doer}
+							deleteFark={() => this.deleteFark()}
+						/>
 					</View>
 				</View>
 				{/* <ScrollView
@@ -53,20 +66,18 @@ class FarkView extends Component {
 					</View>
 
 					<Text style={styles.title}>Order List</Text>
-					{
-						orders.map((order, index) => { 
-							return (
-								<View key={index}>
-									<Text style={styles.label}>   - {order.order}</Text>
-									{/* <CheckBox
+					{ orders.map((order, index) => { 
+						return (
+							<View key={index}>
+								<Text style={styles.label}>   - {order.order}</Text>
+								{/* <CheckBox
 										title={order.order}
 										checked={order.isDone}
 										// onPress={() => this.setState({checked: !this.state.checked})}
 									/> */}
-								</View>
-							) 
-						})
-					}
+							</View>) 
+					})
+					} 
           
 					{ tipStatus &&(
 						<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
@@ -175,6 +186,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	updateFark: (key, doer) => {
 		dispatch(FarkActions.updateFark(key, doer))
+	},
+	deleteFark: (key) => {
+		dispatch(FarkActions.deleteFark(key))
 	}
 })
 

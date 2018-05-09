@@ -7,8 +7,25 @@ import {
 } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import IconIonicons from 'react-native-vector-icons/Ionicons'
+import ActionSheet from 'react-native-actionsheet'
 
 class NavBar extends Component {
+
+	showActionSheet(index) {
+		this.ActionSheet.show()
+	}
+
+	optionsSelect(index) {
+		if (index === 0) {
+			this.props.deleteFark()
+			Actions.pop()
+		} 
+		// else if (index === 1) {
+		//  this.props.deleteReview(this.props.review._id)
+		// 	Actions.pop()
+		// }
+	}
+
 	render () {
 		const { titleName } = this.props
 		return (
@@ -28,13 +45,23 @@ class NavBar extends Component {
 						<Text style={{ fontSize: 18, fontWeight: 'bold', color: 'gray' }}>{ titleName }</Text>
 					</View>
 					<View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
+						{ this.props.currentUser.uid === this.props.creater.uid &&
 						<TouchableOpacity 
 							style={{ width: 50, alignItems: 'center', justifyContent: 'center'}} 
-							// onPress={() => { Actions.farkAdd() }}
+							onPress={() => this.showActionSheet()}
 						>
 							<IconIonicons name='md-more' size={30} color={'gray'} />
 						</TouchableOpacity>
+						}
 					</View>
+					<ActionSheet
+						ref={o => this.ActionSheet = o}
+						// options={['Edit', 'Delete', 'Cancel']}
+						options={['Delete', 'Cancel']}
+						cancelButtonIndex={1}
+						destructiveButtonIndex={0}
+						onPress={(index) => this.optionsSelect(index)}
+					/>
 				</View>
 			</View>
 		)
