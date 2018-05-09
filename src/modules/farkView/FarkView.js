@@ -46,6 +46,14 @@ class FarkView extends Component {
 		console.log(orders, 'orders')
 		this.props.updateCheckBox(this.props.fark.key, orders)
 	}
+
+	checkList() {
+		let bool = true
+		this.props.fark.orders.forEach(element => {
+			if (!element.isDone) bool = false 
+		})
+		return bool 
+	}
   
 	render() {
 		console.log(this.props.fark, 'xxx')
@@ -128,14 +136,23 @@ class FarkView extends Component {
 								</TouchableOpacity>
 							</View>
 							:
-							<View style={styles.blockSave}>
-								<TouchableOpacity
-									style={styles.buttonSave}
-									onPress={() => this.doneJob()}
-								>
-									<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
-								</TouchableOpacity>
-							</View>
+							this.checkList() ?
+								<View style={styles.blockSave}>
+									<TouchableOpacity
+										style={styles.buttonSave}
+										onPress={() => this.doneJob()}
+									>
+										<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
+									</TouchableOpacity>
+								</View>:
+								<View style={styles.blockSave}>
+									<View
+										style={styles.buttonGray}
+										onPress={() => this.doneJob()}
+									>
+										<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
+									</View>
+								</View>
 					)
 					}	
 				</View>
@@ -183,6 +200,16 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		flexDirection: 'row',
 		backgroundColor: 'blue',
+		height: 50,
+		width: 345,
+		borderRadius: 3,
+		zIndex: 2
+	},
+	buttonGray: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		flexDirection: 'row',
+		backgroundColor: 'lightgray',
 		height: 50,
 		width: 345,
 		borderRadius: 3,
