@@ -20,11 +20,11 @@ class NavBar extends Component {
 							Actions.pop()
 						}}
 					>
-						<IconIonicons name='ios-arrow-back' size={30} color={'#777'} />
+						<IconIonicons name='ios-arrow-back' size={30} color={'gray'} />
 					</TouchableOpacity>
 				</View>
 				<View style={{ flex: 5, alignItems: 'flex-start', justifyContent: 'center' }}>
-					<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#777' }}>{ titleName }</Text>
+					<Text style={{ fontSize: 18, fontWeight: 'bold', color: 'gray' }}>{ titleName }</Text>
 				</View>
 			</View>
 		)

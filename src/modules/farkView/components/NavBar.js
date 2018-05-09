@@ -5,9 +5,8 @@ import {
 	TouchableOpacity,
 	View
 } from 'react-native'
-
 import { Actions } from 'react-native-router-flux'
-import IconEntypo from 'react-native-vector-icons/Entypo'
+import IconIonicons from 'react-native-vector-icons/Ionicons'
 
 class NavBar extends Component {
 	render () {
@@ -15,15 +14,25 @@ class NavBar extends Component {
 		return (
 			<View style={styles.navBar} >
 				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}} >
-					<View style={{ flex: 5, alignItems: 'flex-end', justifyContent: 'center' }}>
+					<View style={{ flex: 1, alignItems: 'center', flexDirection: 'row'}} >
+						<TouchableOpacity 
+							style={{ width: 50, alignItems: 'center', justifyContent: 'center'}} 
+							onPress={() => { 
+								Actions.pop()
+							}}
+						>
+							<IconIonicons name='ios-arrow-back' size={30} color={'gray'} />
+						</TouchableOpacity>
+					</View>
+					<View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
 						<Text style={{ fontSize: 18, fontWeight: 'bold', color: 'gray' }}>{ titleName }</Text>
 					</View>
-					<View style={{ flex: 3, alignItems: 'flex-end', justifyContent: 'center'}}>
+					<View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
 						<TouchableOpacity 
 							style={{ width: 50, alignItems: 'center', justifyContent: 'center'}} 
 							onPress={() => { Actions.farkAdd() }}
 						>
-							<IconEntypo name='plus' size={30} color={'blue'} />
+							<IconIonicons name='md-more' size={30} color={'gray'} />
 						</TouchableOpacity>
 					</View>
 				</View>

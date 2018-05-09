@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import NavBar from '../farkList/components/NavBar'
-import farklist from '../../constant/farklist'
 import { List, ListItem } from 'react-native-elements'
 import CoverImage from '../shares/CoverImage'
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
+import { Actions } from 'react-native-router-flux'
 
 class FarkList extends Component {
 
@@ -21,7 +21,7 @@ class FarkList extends Component {
 			<View style={styles.container}>
 				<View style={styles.header}>
 					<View style={styles.platformHeader}>
-						<NavBar titleName="FRAK LIST" />
+						<NavBar titleName="FARK LIST" />
 					</View>
 				</View>
 				<View style={styles.body}>
@@ -64,7 +64,7 @@ class FarkList extends Component {
 										</View>
 									}
 									hideChevron={true}
-									// onPress={() => this.goToViewReviewPage(review)}
+									onPress={() => { Actions.farkView() }}
 								/>
 							)
 						})

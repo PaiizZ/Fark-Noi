@@ -6,7 +6,7 @@ const FarkActions = {
 		try {
 			const farkRef = db.ref('/').child('farks')
 			await farkRef.push().set(fark)
-			// dispatch(FarkActions.getRestaurants())
+			dispatch(FarkActions.getFarks())
 		} catch (error) {
 			console.log('add fark error')
 		}

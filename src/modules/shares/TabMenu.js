@@ -59,7 +59,7 @@ export class TabMenu extends Component {
 						this.setState({ selectedTab: 'home' })
 					}}
 					renderIcon={() => (
-						<IconMaterialCommunity name="format-list-bulleted" size={this.px2dp(26)} color={'#777'} />
+						<IconMaterialCommunity name="format-list-bulleted" size={this.px2dp(26)} color={'gray'} />
 					)}
 					renderSelectedIcon={() => (
 						<IconMaterialCommunity name="format-list-bulleted" size={this.px2dp(26)} color={'blue'} />
@@ -74,7 +74,7 @@ export class TabMenu extends Component {
 						this.setState({ selectedTab: 'user' })
 					}}
 					renderIcon={() => (
-						<IconFontAwesome name="user" size={this.px2dp(22)} color={'#777'} />
+						<IconFontAwesome name="user" size={this.px2dp(22)} color={'gray'} />
 					)}
 					renderSelectedIcon={() => (
 						<IconFontAwesome name="user" size={this.px2dp(22)} color={'blue'} />
