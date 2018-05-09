@@ -20,7 +20,7 @@ const FarkActions = {
 				arrayData.push({ ...element.val(), key: element.key })
 			})
 			console.log(arrayData, 'arrayData')
-			dispatch(actions.getFarksSuccess(arrayData))
+			dispatch(actions.getFarksSuccess(arrayData.reverse()))
 		} catch (error) {
 			dispatch(actions.getFarksError())
 		}
