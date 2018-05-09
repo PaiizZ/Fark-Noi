@@ -4,7 +4,7 @@ import { db } from '../../constant/firebase'
 const FarkActions = {
 	addFark: (fark) => async dispatch => {
 		try {
-			const farkRef = db.ref('/').child('farks')
+			const farkRef = db.ref().child('/farks')
 			await farkRef.push().set(fark)
 			dispatch(FarkActions.getFarks())
 		} catch (error) {
@@ -23,12 +23,16 @@ const FarkActions = {
 		} catch (error) {
 			dispatch(actions.getFarksError())
 		}
-
+	},
+	updateFark: (key, doer) => async dispatch => {
+		try {
+			const farkRef = db.ref().child(`/farks/${key}`)
+			await farkRef.update({ doer })
+			dispatch(FarkActions.getFarks())
+		} catch (error) {
+			console.log('update fark error')
+		}
 	}
-	// setCurrentUser: user => ({
-	// 	type: constants.SET_CURRENT_USER,
-	// 	payload: user
-	// })
 }
 
 const actions = {

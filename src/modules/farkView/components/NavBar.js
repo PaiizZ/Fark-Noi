@@ -30,7 +30,7 @@ class NavBar extends Component {
 					<View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
 						<TouchableOpacity 
 							style={{ width: 50, alignItems: 'center', justifyContent: 'center'}} 
-							onPress={() => { Actions.farkAdd() }}
+							// onPress={() => { Actions.farkAdd() }}
 						>
 							<IconIonicons name='md-more' size={30} color={'gray'} />
 						</TouchableOpacity>

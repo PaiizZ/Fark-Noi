@@ -1,16 +1,32 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import farklist from '../../constant/farklist'
+import { Platform, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
 import { List, ListItem, Divider } from 'react-native-elements'
 // import Tabs from '../shares/Tabs'
 import { Actions } from 'react-native-router-flux'
+import { LoginManager } from 'react-native-fbsdk'
 import CoverImage from '../shares/CoverImage'
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
+import UserActions from '../../redux/actions/user'
 
 class UserPage extends Component {
+	logout() {
+		Alert.alert(
+			'Logout',
+			'Are you sure ?',
+			[
+				{text: 'Cancel', style: 'cancel'},
+				{text: 'OK', onPress: () => {
+					LoginManager.logOut()
+					this.props.signoutFacebook()
+					Actions.loginPage()
+				}}
+			]
+		)
+	}
+
 	render() {
 		console.log(this.props.currentUser, 'currentUser')
 		if (!this.props.currentUser || !this.props.farks) {
@@ -20,10 +36,11 @@ class UserPage extends Component {
 			<View style={styles.container}>
 				<View style={styles.body}>
 					<TouchableOpacity style={[styles.settingIconContainer, { right: 10 }]}>
-						<MaterialIcons
-							name="settings"
+						<FontAwesome
+							name="power-off"
 							size={25}
-							onPress={() => Actions.settingPage()}
+							color='red'
+							onPress={() => this.logout()}
 						/>
 					</TouchableOpacity>
 					<View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -142,7 +159,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-
+	signoutFacebook: () => {
+		dispatch(UserActions.signoutFacebook())
+	}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserPage)

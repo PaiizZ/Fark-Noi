@@ -1,11 +1,27 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, ScrollView, Text, View, TouchableOpacity } from 'react-native'
+import { Platform, StyleSheet, ScrollView, Alert, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import NavBar from '../farkView/components/NavBar'
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import FarkActions from '../../redux/actions/fark'
+import { Actions } from 'react-native-router-flux'
 
 class FarkView extends Component {
+  
+	acceptJob() {
+		Alert.alert(
+			'Accept Job',
+			'You can’t cancel the “fark list”,\nif you have already confirmed it.',
+			[
+				{text: 'Cancel', style: 'cancel'},
+				{text: 'OK', onPress: () => {
+					this.props.updateFark(this.props.fark.key, this.props.currentUser)
+					Actions.pop()
+				}}
+			]
+		)
+	}
   
 	render() {
 		console.log(this.props.fark, 'xxx')
@@ -17,12 +33,13 @@ class FarkView extends Component {
 						<NavBar titleName="FARK VIEW" />
 					</View>
 				</View>
-				<ScrollView
+				{/* <ScrollView
 					showsVerticalScrollIndicator={false}
 					scrollEventThrottle={16}
 					bounces={false}
 					style={styles.body}
-				>
+				> */}
+				<View style={styles.body}>
 					<Text style={styles.title}>{title}</Text>
 
 					<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
@@ -70,13 +87,14 @@ class FarkView extends Component {
 						<View style={styles.blockSave}>
 							<TouchableOpacity
 								style={styles.buttonSave}
-							// onPress={() => this.addFark()}
+								onPress={() => this.acceptJob()}
 							>
 								<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ACCEPT</Text>
 							</TouchableOpacity>
 						</View>
 					}	
-				</ScrollView>
+				</View>
+				{/* </ScrollView> */}
 			</View>
 		)
 	}
@@ -145,7 +163,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-
+	updateFark: (key, doer) => {
+		dispatch(FarkActions.updateFark(key, doer))
+	}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FarkView)
