@@ -25,7 +25,7 @@ class FarkView extends Component {
   
 	render() {
 		console.log(this.props.fark, 'xxx')
-		const { title, shop, deliver, note, tip, tipStatus, creater, orders } = this.props.fark
+		const { title, shop, deliver, note, tip, tipStatus, creater, doer, orders } = this.props.fark
 		return (
 			<View style={styles.container}>
 				<View style={styles.header}>
@@ -41,7 +41,6 @@ class FarkView extends Component {
 				> */}
 				<View style={styles.body}>
 					<Text style={styles.title}>{title}</Text>
-
 					<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
 						<IconEntypo style={{ marginLeft: 15 }} name="shop" color={'gray'} size={26} />
 						<Text style={styles.label}>Shop :</Text>
@@ -83,15 +82,26 @@ class FarkView extends Component {
 						</View>
 					)}
 				
-					{ this.props.currentUser.uid !== creater.uid &&
-						<View style={styles.blockSave}>
-							<TouchableOpacity
-								style={styles.buttonSave}
-								onPress={() => this.acceptJob()}
-							>
-								<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ACCEPT</Text>
-							</TouchableOpacity>
-						</View>
+					{ this.props.currentUser.uid !== creater.uid &&(
+						!doer ? 
+							<View style={styles.blockSave}>
+								<TouchableOpacity
+									style={styles.buttonSave}
+									onPress={() => this.acceptJob()}
+								>
+									<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ACCEPT</Text>
+								</TouchableOpacity>
+							</View>
+							:
+							<View style={styles.blockSave}>
+								<TouchableOpacity
+									style={styles.buttonSave}
+									onPress={() => this.doneJob()}
+								>
+									<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
+								</TouchableOpacity>
+							</View>
+					)
 					}	
 				</View>
 				{/* </ScrollView> */}
