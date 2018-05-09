@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, ScrollView, Text, View, TextInput, Switch, TouchableOpacity } from 'react-native'
-import IconMaterial from 'react-native-vector-icons/MaterialIcons'
+import { Platform, StyleSheet, ScrollView, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 import NavBar from '../farkView/components/NavBar'
+import { CheckBox } from 'react-native-elements'
 
 class FarkView extends Component {
-
+  
 	render() {
+		console.log(this.props.fark, 'xxx')
+		const { title, shop, deliver, note, tip, tipStatus, creater, orders } = this.props.fark
 		return (
 			<View style={styles.container}>
 				<View style={styles.header}>
@@ -15,7 +17,59 @@ class FarkView extends Component {
 						<NavBar titleName="FARK VIEW" />
 					</View>
 				</View>
-			
+				<View style={styles.body}>
+					<Text style={styles.title}>{title}</Text>
+
+					<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
+						<Text style={styles.label}>Shop :</Text>
+						<Text style={styles.label}>{shop}</Text>
+					</View>
+					<View style={{ flexDirection: 'row', flexWrap: 'wrap'}}>
+						<Text style={styles.label}>Deliver :</Text>
+						<Text style={styles.label}>{deliver}</Text>
+					</View>
+
+					<Text style={styles.title}>Order List</Text>
+					{
+						orders.map((order, index) => { 
+							return (
+								<View key={index}>
+									<CheckBox
+										title={order.order}
+										checked={order.isDone}
+										// onPress={() => this.setState({checked: !this.state.checked})}
+									/>
+								</View>
+							) 
+						})
+					}
+          
+					{ tipStatus &&(
+						<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
+							<Text style={styles.label}>Tip :</Text>
+							<Text style={styles.label}>{tip}   Baht</Text>
+						</View>
+					)}
+          
+					{ note.length > 0 && (
+						<View style= {{ marginTop: 15}}>
+							<Text style={styles.label}>Note</Text>
+							<Text style={[styles.label, { marginLeft: 30 }]}>{note}</Text>
+						</View>
+					)}
+				
+					{ this.props.currentUser.uid !== creater.uid &&
+						<View style={styles.blockSave}>
+							<TouchableOpacity
+								style={styles.buttonSave}
+							// onPress={() => this.addFark()}
+							>
+								<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ACCEPT</Text>
+							</TouchableOpacity>
+						</View>
+					}
+					
+				</View>
 			</View>
 		)
 	}
@@ -27,6 +81,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'white'
 	},
 	body: {
+		flex: 1,
 		marginTop: Platform.OS === 'ios' ? 75 : 60
 	},
 	platformHeader: {
@@ -39,74 +94,19 @@ const styles = StyleSheet.create({
 		right: 0,
 		top: 0
 	},
+	title: {
+		color: '#5C5C5C',
+		fontSize: 20,
+		marginLeft: 15,
+		marginTop: 15,
+		fontWeight: 'bold'
+	},
 	label: {
 		color: '#5C5C5C',
-		fontSize: 15,
+		fontSize: 18,
 		marginLeft: 15,
 		marginTop: 5,
 		fontWeight: 'bold'
-	},
-	textBox: {
-		height: 40,
-		borderRadius: 3,
-		justifyContent: 'center',
-		backgroundColor: '#FFF',
-		paddingHorizontal: 15,
-		marginLeft: 15,
-		marginRight: 15,
-		marginTop: 10,
-		marginBottom: 10,
-		borderColor: '#dfdfdf',
-		borderWidth: 1
-	},
-	textInput: {
-		flex: 1,
-		color: '#616670',
-		fontSize: 15,
-		height: 35,
-		padding: 0
-	},
-	fontRed: {
-		color: 'red'
-	},
-	buttonAddOrder: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginLeft: 15,
-		marginRight: 15,
-		marginTop: 10,
-		marginBottom: 10,
-		backgroundColor: 'white',
-		height: 35,
-		borderRadius: 3,
-		borderColor: '#dfdfdf',
-		borderWidth: 1
-	},
-	containerSwitch: {
-		marginTop: 10,
-		// marginLeft: 15,
-		marginRight: 15,
-		marginBottom: 5
-	},
-	switch: {
-		marginLeft: 24,
-		width: 51,
-		height: 31,
-		borderRadius: 25
-	},
-	bodyTextInput: {
-		marginTop: 10,
-		marginLeft: 15,
-		marginRight: 15,
-		padding: 10,
-		borderColor: '#dfdfdf',
-		borderWidth: 1
-	},
-	textInputLabel: {
-		fontSize: 15,
-		color: '#616670',
-		minHeight: 100,
-		padding: 0
 	},
 	buttonSave: {
 		justifyContent: 'center',
@@ -114,11 +114,14 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		backgroundColor: 'blue',
 		height: 50,
+		width: 345,
 		borderRadius: 3,
 		zIndex: 2
 	},
 	blockSave: {
-		marginTop: 10,
+		flex: 1,
+		position: 'absolute',
+		bottom: 0,
 		marginLeft: 10,
 		marginRight: 10,
 		borderTopColor: '#f1f1f1',

@@ -16,7 +16,7 @@ class FarkList extends Component {
 	}
 
 	render() {
-		console.log(this.props.farks, 'farklist')
+		// console.log(this.props.farks, 'farklist')
 		return (
 			<View style={styles.container}>
 				<View style={styles.header}>
@@ -64,7 +64,7 @@ class FarkList extends Component {
 										</View>
 									}
 									hideChevron={true}
-									onPress={() => { Actions.farkView() }}
+									onPress={() => { Actions.farkView({ fark }) }}
 								/>
 							)
 						})
