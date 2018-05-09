@@ -10,9 +10,10 @@ const UserActions = {
 		try {
 			const user = await auth.signInWithCredential(credential)
 			const user_obj = {
-				uid: user.uid,
 				displayName: user.displayName,
 				photoURL: user.photoURL
+				// farkList: [],
+				// farkJobs: []
 			}
 			db.ref(`/users/${user.uid}`).set(user_obj)
 			dispatch(actions.loginFacebookSuccess())
@@ -21,10 +22,19 @@ const UserActions = {
 			dispatch(actions.loginFacebookError())
 		}
 	},
+	signoutFacebook: () => async dispatch => {
+		try {
+			const result = await auth.signOut()
+			console.log(result)
+		} catch (error) {
+			console.log('auth', error)
+		}
+	},
 	setCurrentUser: user => ({
 		type: constants.SET_CURRENT_USER,
 		payload: user
 	})
+	
 }
 
 const actions = {

@@ -11,6 +11,7 @@ import { LoginManager } from 'react-native-fbsdk'
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux'
 import NavBar from '../../shares/NavBar'
+import UserActions from '../../../redux/actions/user'
 
 class SettingPage extends Component {
 	constructor (props) {
@@ -25,6 +26,7 @@ class SettingPage extends Component {
 				{text: 'Cancel', style: 'cancel'},
 				{text: 'OK', onPress: () => {
 					LoginManager.logOut()
+					this.props.signoutFacebook()
 					Actions.loginPage()
 				}}
 			]
@@ -80,6 +82,9 @@ const styles = StyleSheet.create({
 })
 
 const mapDispatchToProps = dispatch => ({
+	signoutFacebook: () => {
+		dispatch(UserActions.signoutFacebook())
+	}
 })
 
 export default connect(null, mapDispatchToProps)(SettingPage)
