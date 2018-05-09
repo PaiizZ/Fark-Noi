@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, ScrollView, Text, View, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { Actions } from 'react-native-router-flux'
 import NavBar from '../farkView/components/NavBar'
-import { CheckBox } from 'react-native-elements'
+import IconEntypo from 'react-native-vector-icons/Entypo'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 class FarkView extends Component {
   
@@ -17,14 +17,21 @@ class FarkView extends Component {
 						<NavBar titleName="FARK VIEW" />
 					</View>
 				</View>
-				<View style={styles.body}>
+				<ScrollView
+					showsVerticalScrollIndicator={false}
+					scrollEventThrottle={16}
+					bounces={false}
+					style={styles.body}
+				>
 					<Text style={styles.title}>{title}</Text>
 
 					<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
+						<IconEntypo style={{ marginLeft: 15 }} name="shop" color={'gray'} size={26} />
 						<Text style={styles.label}>Shop :</Text>
 						<Text style={styles.label}>{shop}</Text>
 					</View>
 					<View style={{ flexDirection: 'row', flexWrap: 'wrap'}}>
+						<MaterialCommunityIcons style={{ marginLeft: 5 }} name="cube-send" color={'gray'} size={35} />
 						<Text style={styles.label}>Deliver :</Text>
 						<Text style={styles.label}>{deliver}</Text>
 					</View>
@@ -34,11 +41,12 @@ class FarkView extends Component {
 						orders.map((order, index) => { 
 							return (
 								<View key={index}>
-									<CheckBox
+									<Text style={styles.label}>   - {order.order}</Text>
+									{/* <CheckBox
 										title={order.order}
 										checked={order.isDone}
 										// onPress={() => this.setState({checked: !this.state.checked})}
-									/>
+									/> */}
 								</View>
 							) 
 						})
@@ -67,9 +75,8 @@ class FarkView extends Component {
 								<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ACCEPT</Text>
 							</TouchableOpacity>
 						</View>
-					}
-					
-				</View>
+					}	
+				</ScrollView>
 			</View>
 		)
 	}

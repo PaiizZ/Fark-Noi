@@ -31,22 +31,13 @@ class UserPage extends Component {
 						<View style={styles.usernameContainer}>
 							<Text style={styles.usernameText}>{this.props.currentUser.displayName}</Text>
 						</View>
-						<View style={styles.descriptionContainer}>
-							<View style={{ width: '80%' }}>
-								{/* { (description !== '' && description)
-			?<Text style={{ lineHeight: 22, color: colors.gray2, textAlign: 'center' }}>{description}</Text>
-			: */}
-								<Text style={{ lineHeight: 22, color: 'gray', textAlign: 'center' }}>{'You can change your status in settings.'}</Text>
-								{/* } */}
-							</View>
-						</View>
 					</View>
 
 				
 
-					{/* <View style={{ alignItems: 'center' }}>
+					<View style={{ alignItems: 'center' }}>
 						<Divider style={styles.divider} />
-					</View> */}
+					</View>
 	
 					<List containerStyle={{ borderColor: 'transparent'}}>
 						{farklist.farklist.map((fark, index) => {
