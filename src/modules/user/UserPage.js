@@ -51,16 +51,14 @@ class UserPage extends Component {
 						</View>
 					</View>
 
-				
-
 					<View style={{ alignItems: 'center' }}>
 						<Divider style={styles.divider} />
 					</View>
 					
 					<View style={styles.tabsContainer}>
 						<Tabs>
-							{/* <View title="FARK LIST">
-								<List containerStyle={{ borderColor: 'transparent' }}>
+							<View title="FARK LIST">
+								<List containerStyle={{ marginTop: 0, borderColor: 'transparent' }}>
 									{this.props.farks.map((fark, index) => {
 										return (
 											this.props.currentUser.uid === fark.creater.uid && (
@@ -68,30 +66,25 @@ class UserPage extends Component {
 													avatar={
 														<CoverImage size={80} uri={`${fark.creater.photoURL}`+'/picture?height=300'} />
 													}
-													containerStyle={{ marginTop: 15, borderBottomColor: 'transparent' }}
+													containerStyle={{ borderBottomColor: 'transparent' }}
 													key={index}
 													title={fark.title}
 													titleStyle={{ fontWeight: 'bold', color: 'gray', marginLeft: 15 }}
 													titleNumberOfLines={1}
 													subtitle={
-														<View style={{ flexDirection: 'row', marginLeft: 15, bottom: 0}}>
-															<View>
-																<Text></Text>
-																<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-																	<View style={{ flexDirection: 'row', marginRight: 15 }}>
-																		<View style={styles.productDetailLeft}>
-																			<IconEntypo name="shop" color={'gray'} size={26} />
-																			<Text style={styles.productDetailText}>{fark.shop}</Text>
-																		</View>
-																		<View style={styles.productDetailRight}>
-																			<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
-																			<Text style={styles.productDetailText}>{fark.deliver}</Text>
-																		</View>
-																	</View>
+														<View style={{ flexDirection: 'row', marginLeft: 15 }}>
+															<View style={{ }}>
+																<View style={styles.shopIcon}>
+																	<IconEntypo name="shop" color={'gray'} size={26} />
+																	<Text style={styles.productDetailText}>{fark.shop}</Text>
+																</View>
+																<View style={styles.sentIcon}>
+																	<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
+																	<Text style={styles.productDetailText}>{fark.deliver}</Text>
 																</View>
 															</View>
 															{ fark.tipStatus &&(
-																<View>
+																<View style={{ flex: 1}}>
 																	<View style={styles.coin}>
 																		<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
 																	</View>
@@ -109,7 +102,7 @@ class UserPage extends Component {
 								</List> 
 							</View>
 							<View title="FARK JOB">
-								<List containerStyle={{ borderColor: 'transparent' }}>
+								<List containerStyle={{ marginTop: 0, borderColor: 'transparent' }}>
 									{this.props.farks.map((fark, index) => {
 										return (
 											fark.doer && (this.props.currentUser.uid === fark.doer.uid) && (
@@ -123,24 +116,19 @@ class UserPage extends Component {
 													titleStyle={{ fontWeight: 'bold', color: 'gray', marginLeft: 15 }}
 													titleNumberOfLines={1}
 													subtitle={
-														<View style={{ flexDirection: 'row', marginLeft: 15, bottom: 0}}>
-															<View>
-																<Text></Text>
-																<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-																	<View style={{ flexDirection: 'row', marginRight: 15 }}>
-																		<View style={styles.productDetailLeft}>
-																			<IconEntypo name="shop" color={'gray'} size={26} />
-																			<Text style={styles.productDetailText}>{fark.shop}</Text>
-																		</View>
-																		<View style={styles.productDetailRight}>
-																			<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
-																			<Text style={styles.productDetailText}>{fark.deliver}</Text>
-																		</View>
-																	</View>
+														<View style={{ flexDirection: 'row', marginLeft: 15 }}>
+															<View style={{ }}>
+																<View style={styles.shopIcon}>
+																	<IconEntypo name="shop" color={'gray'} size={26} />
+																	<Text style={styles.productDetailText}>{fark.shop}</Text>
+																</View>
+																<View style={styles.sentIcon}>
+																	<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
+																	<Text style={styles.productDetailText}>{fark.deliver}</Text>
 																</View>
 															</View>
 															{ fark.tipStatus &&(
-																<View>
+																<View style={{ flex: 1}}>
 																	<View style={styles.coin}>
 																		<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
 																	</View>
@@ -156,7 +144,7 @@ class UserPage extends Component {
 									})
 									}
 								</List>
-							</View> */}
+							</View>
 						</Tabs>
 					</View>
 					
@@ -173,21 +161,6 @@ const styles = StyleSheet.create({
 	},
 	body: {
 		marginTop: Platform.OS === 'ios' ? 25 : 0
-	},
-	productDetailLeft: {
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	productDetailRight: {
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginLeft: 10
-	},
-	productDetailText: {
-		color: 'gray',
-		marginLeft: 5
 	},
 	usernameText: {
 		fontSize: 18,
@@ -206,8 +179,27 @@ const styles = StyleSheet.create({
 	},
 	tabsContainer: {
 		marginTop: 20,
-		paddingLeft: 12,
-		paddingRight: 12
+		paddingLeft: 5,
+		paddingRight: 5
+	},
+	shopIcon: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		marginTop: 5
+	},
+	sentIcon: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		marginLeft: -10
+	},
+	productDetailText: {
+		color: 'gray',
+		marginLeft: 5
+	},
+	coin: {
+		flex: 1,
+		justifyContent: 'flex-end',
+		alignItems: 'flex-end'
 	}
 })
 

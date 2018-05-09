@@ -16,7 +16,6 @@ class FarkList extends Component {
 	}
 
 	render() {
-		// console.log(this.props.farks, 'farklist')
 		return (
 			<View style={styles.container}>
 				<View style={styles.header}>
@@ -25,7 +24,7 @@ class FarkList extends Component {
 					</View>
 				</View>
 				<View style={styles.body}>
-					<List containerStyle={{ borderColor: 'transparent' }}>
+					<List containerStyle={{ marginTop: 0, borderColor: 'transparent' }}>
 						{this.props.farks.map((fark, index) => {
 							return (
 								!fark.doer && (
@@ -39,24 +38,19 @@ class FarkList extends Component {
 										titleStyle={{ fontWeight: 'bold', color: 'gray', marginLeft: 15 }}
 										titleNumberOfLines={1}
 										subtitle={
-											<View style={{ flexDirection: 'row', marginLeft: 15, bottom: 0}}>
-												<View>
-													<Text></Text>
-													<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-														<View style={{ flexDirection: 'row', marginRight: 15 }}>
-															<View style={styles.productDetailLeft}>
-																<IconEntypo name="shop" color={'gray'} size={26} />
-																<Text style={styles.productDetailText}>{fark.shop}</Text>
-															</View>
-															<View style={styles.productDetailRight}>
-																<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
-																<Text style={styles.productDetailText}>{fark.deliver}</Text>
-															</View>
-														</View>
+											<View style={{ flexDirection: 'row', marginLeft: 15 }}>
+												<View style={{ }}>
+													<View style={styles.shopIcon}>
+														<IconEntypo name="shop" color={'gray'} size={26} />
+														<Text style={styles.productDetailText}>{fark.shop}</Text>
+													</View>
+													<View style={styles.sentIcon}>
+														<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
+														<Text style={styles.productDetailText}>{fark.deliver}</Text>
 													</View>
 												</View>
 												{ fark.tipStatus &&(
-													<View>
+													<View style={{ flex: 1}}>
 														<View style={styles.coin}>
 															<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
 														</View>
@@ -96,21 +90,20 @@ const styles = StyleSheet.create({
 		right: 0,
 		top: 0
 	},
-	productDetailLeft: {
+	shopIcon: {
 		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	productDetailRight: {
-		flexDirection: 'row',
-		justifyContent: 'center',
 		alignItems: 'center',
-		marginLeft: 10
+		marginTop: 5
+	},
+	sentIcon: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		marginLeft: -10
 	},
 	coin: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginRight: 0
+		flex: 1,
+		justifyContent: 'flex-end',
+		alignItems: 'flex-end'
 	},
 	productDetailText: {
 		color: 'gray',
