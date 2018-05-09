@@ -105,13 +105,20 @@ class FarkView extends Component {
 								<View key={index}>
 									<Text style={styles.label}>   - {order.order}</Text>
 								</View>:
-								<View key={index}>
-									<CheckBox
-										title={order.order}
-										checked={order.isDone}
-										onPress={() => this.checkBox(index)}
-									/>
-								</View>
+								isDone ?
+									<View key={index}>
+										<View style={{ flexDirection: 'row'}}>
+											<MaterialCommunityIcons style={{ marginLeft: 20 }} name="checkbox-marked" color={'#009933'} size={30} />
+											<Text style={styles.label}>{order.order}</Text>
+										</View>
+									</View>:
+									<View key={index}>
+										<CheckBox
+											title={order.order}
+											checked={order.isDone}
+											onPress={() => this.checkBox(index)}
+										/>
+									</View>
 						) 
 					})
 					} 

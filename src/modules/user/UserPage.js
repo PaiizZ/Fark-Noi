@@ -89,12 +89,18 @@ class UserPage extends Component {
 																	<Text style={styles.productDetailText}>{fark.deliver}</Text>
 																</View>
 															</View>
-															{ fark.tipStatus &&(
+															{fark.isDone ?
 																<View style={{ flex: 1}}>
 																	<View style={styles.coin}>
-																		<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
+																		<MaterialCommunityIcons name="check-circle" color={'#009933'} size={50} />
 																	</View>
-																</View>)
+																</View> :
+																fark.tipStatus &&(
+																	<View style={{ flex: 1}}>
+																		<View style={styles.coin}>
+																			<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
+																		</View>
+																	</View>)
 															}
 														</View>
 													}
@@ -133,12 +139,18 @@ class UserPage extends Component {
 																	<Text style={styles.productDetailText}>{fark.deliver}</Text>
 																</View>
 															</View>
-															{ fark.tipStatus &&(
+															{fark.isDone ?
 																<View style={{ flex: 1}}>
 																	<View style={styles.coin}>
-																		<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
+																		<MaterialCommunityIcons name="check-circle" color={'#009933'} size={50} />
 																	</View>
-																</View>)
+																</View> :
+																fark.tipStatus &&(
+																	<View style={{ flex: 1}}>
+																		<View style={styles.coin}>
+																			<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
+																		</View>
+																	</View>)
 															}
 														</View>
 													}
