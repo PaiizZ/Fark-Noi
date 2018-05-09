@@ -10,21 +10,21 @@ const FarkActions = {
 		} catch (error) {
 			console.log('add fark error')
 		}
-	}
-	// getFarks: () => async dispatch => {
-	// 	dispatch(actions.getRestaurantsRequest())
-	// 	try {
-	// 		const data = await db.ref('restaurants').once('value')
-	// 		var arrayData = []
-	// 		data.forEach((element) => {
-	// 			arrayData.push({ ...element.val(), key: element.key })
-	// 		})
-	// 		dispatch(actions.getRestaurantsSuccess(arrayData))
-	// 	} catch (error) {
-	// 		dispatch(actions.getRestaurantsError())
-	// 	}
+	},
+	getFarks: () => async dispatch => {
+		dispatch(actions.getFarksRequest())
+		try {
+			const data = await db.ref('farks').once('value')
+			var arrayData = []
+			data.forEach((element) => {
+				arrayData.push({ ...element.val(), key: element.key })
+			})
+			dispatch(actions.getFarksSuccess(arrayData))
+		} catch (error) {
+			dispatch(actions.getFarksError())
+		}
 
-	// },
+	}
 	// setCurrentUser: user => ({
 	// 	type: constants.SET_CURRENT_USER,
 	// 	payload: user
@@ -32,17 +32,17 @@ const FarkActions = {
 }
 
 const actions = {
-	// getRestaurantsRequest: () => ({
-	// 	type: constants.GET_RESTAURANTS_REQUEST
-	// }),
-	// getRestaurantsSuccess: response => ({
-	// 	type: constants.GET_RESTAURANTS_SUCCESS,
-	// 	payload: response
-	// }),
-	// getRestaurantsError: error => ({
-	// 	type: constants.GET_RESTAURANTS_FAILURE,
-	// 	payload: error
-	// })
+	getFarksRequest: () => ({
+		type: constants.GET_FARK_REQUEST
+	}),
+	getFarksSuccess: response => ({
+		type: constants.GET_FARK_SUCCESS,
+		payload: response
+	}),
+	getFarksError: error => ({
+		type: constants.GET_FARK_FAILURE,
+		payload: error
+	})
 }
 
 export default FarkActions

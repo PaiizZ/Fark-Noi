@@ -8,6 +8,7 @@ import TabNavigator from 'react-native-tab-navigator'
 import { Actions } from 'react-native-router-flux'
 import { auth } from '../../constant/firebase'
 import UserActions from '../../redux/actions/user'
+import FarkActions from '../../redux/actions/fark'
 import { connect } from 'react-redux'
 
 const deviceWidth = Dimensions.get('window').width
@@ -25,6 +26,7 @@ export class TabMenu extends Component {
 	componentDidMount() {
 		console.disableYellowBox = true
 		this.setCurrentUser()
+		this.props.getFarks()
 	}
 
 	setCurrentUser() {
@@ -97,6 +99,9 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => ({
 	setCurrentUser: user => {
 		dispatch(UserActions.setCurrentUser(user))
+	},
+	getFarks: () => {
+		dispatch(FarkActions.getFarks())
 	}
 })
 

@@ -6,8 +6,9 @@ import { List, ListItem } from 'react-native-elements'
 import CoverImage from '../shares/CoverImage'
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { connect } from 'react-redux'
 
-export default class FarkList extends Component {
+class FarkList extends Component {
 
 	replaceMarks(text) {
 		const str = text.replace(/ุ|ู|ิ|ี|ึ|ื|่|้|๊|๋|ั|ํ|็/g, '')
@@ -15,7 +16,7 @@ export default class FarkList extends Component {
 	}
 
 	render() {
-		console.log(farklist.farklist, 'farklist')
+		console.log(this.props.farks, 'farklist')
 		return (
 			<View style={styles.container}>
 				<View style={styles.header}>
@@ -25,11 +26,11 @@ export default class FarkList extends Component {
 				</View>
 				<View style={styles.body}>
 					<List containerStyle={{ borderColor: 'transparent' }}>
-						{farklist.farklist.map((fark, index) => {
+						{this.props.farks.map((fark, index) => {
 							return (
 								<ListItem
 									avatar={
-										<CoverImage size={80} url={fark.creater.pic_url} />
+										<CoverImage size={80} uri={`${fark.creater.photoURL}`+'/picture?height=300'} />
 									}
 									containerStyle={{ borderBottomColor: 'transparent' }}
 									key={index}
@@ -48,14 +49,14 @@ export default class FarkList extends Component {
 														</View>
 														<View style={styles.productDetailRight}>
 															<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
-															<Text style={styles.productDetailText}>{fark.reciver}</Text>
+															<Text style={styles.productDetailText}>{fark.deliver}</Text>
 														</View>
 													</View>
 												</View>
 											</View>
-											{ fark.tip_status &&(
+											{ fark.tipStatus &&(
 												<View>
-													<View style={styles.productDetailRight}>
+													<View style={styles.coin}>
 														<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
 													</View>
 												</View>)
@@ -104,8 +105,24 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginLeft: 10
 	},
+	coin: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginRight: 0
+	},
 	productDetailText: {
 		color: 'gray',
 		marginLeft: 5
 	}
 })
+
+const mapStateToProps = state => ({
+	currentUser: state.userReducer.currentUser,
+	farks: state.farkReducer.farks
+})
+
+const mapDispatchToProps = dispatch => ({
+	
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(FarkList)
