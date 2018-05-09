@@ -5,6 +5,7 @@ import { List, ListItem } from 'react-native-elements'
 import CoverImage from '../shares/CoverImage'
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import FarkActions from '../../redux/actions/fark'
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 
@@ -15,7 +16,13 @@ class FarkList extends Component {
 		return str
 	}
 
+	goToViewFarkPage(fark) {
+		this.props.setCurrentFark(fark)
+		Actions.farkView()
+	}
+
 	render() {
+		console.log(this.props.farks, 'this.props.farks')
 		if (!this.props.currentUser || !this.props.farks) {
 			return <View/>
 		}
@@ -62,7 +69,7 @@ class FarkList extends Component {
 											</View>
 										}
 										hideChevron={true}
-										onPress={() => { Actions.farkView({ fark }) }}
+										onPress={() => this.goToViewFarkPage(fark) }
 									/>
 								)
 							)
@@ -120,7 +127,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	
+	setCurrentFark: fark => {
+		dispatch(FarkActions.setCurrentFark(fark))
+	}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FarkList)

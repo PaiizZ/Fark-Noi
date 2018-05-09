@@ -6,8 +6,16 @@ import IconEntypo from 'react-native-vector-icons/Entypo'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import FarkActions from '../../redux/actions/fark'
 import { Actions } from 'react-native-router-flux'
+import { CheckBox } from 'react-native-elements'
 
 class FarkView extends Component {
+  
+	constructor(props) {
+		super(props)
+		this.state = {
+			orders: []
+		}
+	}
   
 	acceptJob() {
 		Alert.alert(
@@ -27,10 +35,22 @@ class FarkView extends Component {
 		this.props.deleteFark(this.props.fark.key)
 	}
   
+	checkBox(index) {
+		console.log(index, 'index')
+		const oOrders = this.props.fark.orders
+		const orders = []
+		for (let i = 0; i < oOrders.length; i++) {
+			if (i === index) orders.push({isDone: !oOrders[i].isDone, order: oOrders[i].order})
+			else orders.push({isDone: oOrders[i].isDone, order: oOrders[i].order})
+		}
+		console.log(orders, 'orders')
+		this.props.updateCheckBox(this.props.fark.key, orders)
+	}
+  
 	render() {
 		console.log(this.props.fark, 'xxx')
 		const { title, shop, deliver, note, tip, tipStatus, creater, doer, orders } = this.props.fark
-		if (!this.props.currentUser) {
+		if (!this.props.currentUser || !this.props.fark) {
 			return <View/>
 		}
 		return (
@@ -68,14 +88,18 @@ class FarkView extends Component {
 					<Text style={styles.title}>Order List</Text>
 					{ orders.map((order, index) => { 
 						return (
-							<View key={index}>
-								<Text style={styles.label}>   - {order.order}</Text>
-								{/* <CheckBox
+							!doer ? 
+								<View key={index}>
+									<Text style={styles.label}>   - {order.order}</Text>
+								</View>:
+								<View key={index}>
+									<CheckBox
 										title={order.order}
 										checked={order.isDone}
-										// onPress={() => this.setState({checked: !this.state.checked})}
-									/> */}
-							</View>) 
+										onPress={() => this.checkBox(index)}
+									/>
+								</View>
+						) 
 					})
 					} 
           
@@ -180,7 +204,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-	currentUser: state.userReducer.currentUser
+	currentUser: state.userReducer.currentUser,
+	fark: state.farkReducer.fark
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -189,6 +214,9 @@ const mapDispatchToProps = dispatch => ({
 	},
 	deleteFark: (key) => {
 		dispatch(FarkActions.deleteFark(key))
+	},
+	updateCheckBox: (key, orders) => {
+		dispatch(FarkActions.updateCheckBox(key, orders))
 	}
 })
 

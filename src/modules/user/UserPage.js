@@ -10,6 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
 import UserActions from '../../redux/actions/user'
+import FarkActions from '../../redux/actions/fark'
 import Tabs from '../shares/Tabs'
 
 class UserPage extends Component {
@@ -26,6 +27,11 @@ class UserPage extends Component {
 				}}
 			]
 		)
+	}
+
+	goToViewFarkPage(fark) {
+		this.props.setCurrentFark(fark)
+		Actions.farkView()
 	}
 
 	render() {
@@ -93,7 +99,7 @@ class UserPage extends Component {
 														</View>
 													}
 													hideChevron={true}
-													onPress={() => { Actions.farkView({ fark }) }}
+													onPress={() => this.goToViewFarkPage(fark) }
 												/>
 											)
 										)
@@ -137,7 +143,7 @@ class UserPage extends Component {
 														</View>
 													}
 													hideChevron={true}
-													onPress={() => { Actions.farkView({ fark }) }}
+													onPress={() => this.goToViewFarkPage(fark) }
 												/>
 											)
 										)
@@ -211,6 +217,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	signoutFacebook: () => {
 		dispatch(UserActions.signoutFacebook())
+	},
+	setCurrentFark: fark => {
+		dispatch(FarkActions.setCurrentFark(fark))
 	}
 })
 
