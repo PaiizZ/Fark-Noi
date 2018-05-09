@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, ScrollView, Alert, Text, View, TouchableOpacity } from 'react-native'
+import { List, ListItem, Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
 import NavBar from '../farkView/components/NavBar'
 import IconEntypo from 'react-native-vector-icons/Entypo'
@@ -7,6 +8,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FarkActions from '../../redux/actions/fark'
 import { Actions } from 'react-native-router-flux'
 import { CheckBox } from 'react-native-elements'
+import AddCommentChat from '../farkView/components/AddCommentChat'
+import CoverImage from '../shares/CoverImage'
 
 class FarkView extends Component {
   
@@ -62,10 +65,11 @@ class FarkView extends Component {
   
 	render() {
 		console.log(this.props.fark, 'xxx')
-		const { title, shop, deliver, note, tip, tipStatus, creater, doer, orders, isDone } = this.props.fark
+		console.log(comments, 'comments')
 		if (!this.props.currentUser || !this.props.fark) {
 			return <View/>
 		}
+		const { title, shop, deliver, note, tip, tipStatus, creater, doer, orders, isDone, comments } = this.props.fark
 		return (
 			<View style={styles.container}>
 				<View style={styles.header}>
@@ -79,13 +83,12 @@ class FarkView extends Component {
 						/>
 					</View>
 				</View>
-				{/* <ScrollView
+				<ScrollView
 					showsVerticalScrollIndicator={false}
 					scrollEventThrottle={16}
 					bounces={false}
 					style={styles.body}
-				> */}
-				<View style={styles.body}>
+				>
 					<Text style={styles.title}>{title}</Text>
 					<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
 						<IconEntypo style={{ marginLeft: 15 }} name="shop" color={'gray'} size={26} />
@@ -137,6 +140,40 @@ class FarkView extends Component {
 						</View>
 					)}
 				
+					
+
+					{ doer && (
+						<View>
+							<Divider style={styles.divider} />
+
+							<View>
+								{ comments !== undefined ? (
+									<View>
+										{comments.map((comment, index) => {
+											return (
+												<View key={index} style={{ flexDirection: 'row', width: '95%'}}>
+													<CoverImage size={70} uri={`${comment.user.photoURL}`+'/picture?height=300'} />
+													<View style={styles.content}>
+														<Text style={styles.username}>{comment.user.displayName}</Text>
+														<Text style={styles.textLabel}>{comment.comment}</Text>
+													</View>
+												</View>
+											)
+										})}
+									</View>) : 
+									<View/>
+								}
+							</View>
+							
+							<View style={{ marginTop: 10 }}>
+								<AddCommentChat 
+									updateComment={(comments) => this.props.updateComment(this.props.fark.key, comments)}
+								/>
+							</View>
+						</View>
+
+					)}
+
 					{ this.props.currentUser.uid !== creater.uid && !isDone &&(
 						!doer ? 
 							<View style={styles.blockSave}>
@@ -164,8 +201,7 @@ class FarkView extends Component {
 								</View>
 					)
 					}	
-				</View>
-				{/* </ScrollView> */}
+				</ScrollView>
 			</View>
 		)
 	}
@@ -226,8 +262,8 @@ const styles = StyleSheet.create({
 	},
 	blockSave: {
 		flex: 1,
-		position: 'absolute',
-		bottom: 0,
+		// position: 'absolute',
+		// bottom: 0,
 		marginLeft: 10,
 		marginRight: 10,
 		borderTopColor: '#f1f1f1',
@@ -236,6 +272,19 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 3 },
 		shadowOpacity: 0.5,
 		padding: 5
+	},
+	content: {
+		flex: 1,
+		flexDirection: 'column',
+		marginTop: 5,
+		marginLeft: 5
+	},
+	username: {
+		fontWeight: 'bold'
+	},
+	textLabel: {
+		color: 'gray',
+		fontSize: 15
 	}
 })
 
@@ -256,6 +305,9 @@ const mapDispatchToProps = dispatch => ({
 	},
 	updateCheckBox: (key, orders) => {
 		dispatch(FarkActions.updateCheckBox(key, orders))
+	},
+	updateComment: (key, comments) => {
+		dispatch(FarkActions.updateComment(key, comments))
 	}
 })
 

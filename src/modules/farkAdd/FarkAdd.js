@@ -60,8 +60,8 @@ class FarkAdd extends Component {
 			doer: null,
 			isDone: false,
 			tipStatus: this.state.tipStatus,
-			tip: this.state.tip.trim(),
-			note: this.state.note.trim()
+			tip: this.state.tip,
+			note: this.state.note
 		}
 		console.log(fark, 'fark')
 		this.props.addFark(fark)

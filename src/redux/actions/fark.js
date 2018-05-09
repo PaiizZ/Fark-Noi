@@ -44,6 +44,16 @@ const FarkActions = {
 			console.log('update fark error')
 		}
 	},
+	updateComment: (key, comments) => async dispatch => {
+		try {
+			const farkRef = db.ref().child(`/farks/${key}`)
+			await farkRef.update({ comments })
+			dispatch(FarkActions.getFarks())
+			dispatch(FarkActions.getCurrentFark(key))
+		} catch (error) {
+			console.log('update fark error')
+		}
+	},
 	deleteFark: (key) => async dispatch => {
 		try {
 			const farkRef = db.ref().child(`/farks/${key}`)

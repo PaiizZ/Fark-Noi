@@ -14,6 +14,7 @@ import FarkActions from '../../redux/actions/fark'
 import Tabs from '../shares/Tabs'
 
 class UserPage extends Component {
+
 	logout() {
 		Alert.alert(
 			'Logout',
@@ -30,7 +31,7 @@ class UserPage extends Component {
 	}
 
 	goToViewFarkPage(fark) {
-		this.props.setCurrentFark(fark)
+		this.props.getCurrentFark(fark.key)
 		Actions.farkView()
 	}
 
@@ -230,8 +231,11 @@ const mapDispatchToProps = dispatch => ({
 	signoutFacebook: () => {
 		dispatch(UserActions.signoutFacebook())
 	},
-	setCurrentFark: fark => {
-		dispatch(FarkActions.setCurrentFark(fark))
+	getFarks: () => {
+		dispatch(FarkActions.getFarks())
+	},
+	getCurrentFark: (key) => {
+		dispatch(FarkActions.getCurrentFark(key))
 	}
 })
 

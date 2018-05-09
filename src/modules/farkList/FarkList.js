@@ -17,7 +17,7 @@ class FarkList extends Component {
 	}
 
 	goToViewFarkPage(fark) {
-		this.props.setCurrentFark(fark)
+		this.props.getCurrentFark(fark.key)
 		Actions.farkView()
 	}
 
@@ -127,8 +127,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	setCurrentFark: fark => {
-		dispatch(FarkActions.setCurrentFark(fark))
+	getCurrentFark: (key) => {
+		dispatch(FarkActions.getCurrentFark(key))
 	}
 })
 
