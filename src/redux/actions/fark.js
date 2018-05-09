@@ -53,6 +53,15 @@ const FarkActions = {
 			console.log('update fark error')
 		}
 	},
+	doneFark: (key) => async dispatch => {
+		try {
+			const farkRef = db.ref().child(`/farks/${key}`)
+			await farkRef.update({ isDone: true })
+			dispatch(FarkActions.getFarks())
+		} catch (error) {
+			console.log('update fark error')
+		}
+	},
 	setCurrentFark: fark => ({
 		type: constants.SET_CURRENT_FARK,
 		payload: fark

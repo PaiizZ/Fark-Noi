@@ -30,6 +30,11 @@ class FarkView extends Component {
 			]
 		)
 	}
+
+	doneJob() {
+		this.props.doneFark(this.props.fark.key)
+		Actions.pop()
+	}
   
 	deleteFark() {
 		this.props.deleteFark(this.props.fark.key)
@@ -57,7 +62,7 @@ class FarkView extends Component {
   
 	render() {
 		console.log(this.props.fark, 'xxx')
-		const { title, shop, deliver, note, tip, tipStatus, creater, doer, orders } = this.props.fark
+		const { title, shop, deliver, note, tip, tipStatus, creater, doer, orders, isDone } = this.props.fark
 		if (!this.props.currentUser || !this.props.fark) {
 			return <View/>
 		}
@@ -125,7 +130,7 @@ class FarkView extends Component {
 						</View>
 					)}
 				
-					{ this.props.currentUser.uid !== creater.uid &&(
+					{ this.props.currentUser.uid !== creater.uid && !isDone &&(
 						!doer ? 
 							<View style={styles.blockSave}>
 								<TouchableOpacity
@@ -146,10 +151,7 @@ class FarkView extends Component {
 									</TouchableOpacity>
 								</View>:
 								<View style={styles.blockSave}>
-									<View
-										style={styles.buttonGray}
-										onPress={() => this.doneJob()}
-									>
+									<View style={styles.buttonGray}>
 										<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
 									</View>
 								</View>
@@ -241,6 +243,9 @@ const mapDispatchToProps = dispatch => ({
 	},
 	deleteFark: (key) => {
 		dispatch(FarkActions.deleteFark(key))
+	},
+	doneFark: (key) => {
+		dispatch(FarkActions.doneFark(key))
 	},
 	updateCheckBox: (key, orders) => {
 		dispatch(FarkActions.updateCheckBox(key, orders))
