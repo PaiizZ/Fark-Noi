@@ -5,6 +5,7 @@ import IconMaterial from 'react-native-vector-icons/MaterialIcons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import FarkActions from '../../redux/actions/fark'
+import { Actions } from 'react-native-router-flux'
 
 class FarkAdd extends Component {
 	constructor(props) {
@@ -15,7 +16,7 @@ class FarkAdd extends Component {
 			deliver: '',
 			orders: [''],
 			ordersName: [],
-			switch: false,
+			tipStatus: false,
 			tip: 0,
 			note: ''
 		}
@@ -28,7 +29,7 @@ class FarkAdd extends Component {
 	}
   
 	toggleButton(value) {
-		this.setState({ switch: value })
+		this.setState({ tipStatus: value })
 	}
   
 	addOrdersBox() {
@@ -52,18 +53,19 @@ class FarkAdd extends Component {
 
 		const fark = {
 			title: this.state.title.trim(),
-			shop: this.state.name.trim(),
+			shop: this.state.shop.trim(),
 			deliver: this.state.deliver.trim(),
 			orders: orders,
 			creater: this.props.currentUser,
 			doer: null,
 			isDone: false,
-			tipStatus: false,
+			tipStatus: this.state.tipStatus,
 			tip: this.state.tip.trim(),
 			note: this.state.note.trim()
 		}
 		console.log(fark, 'fark')
-		// this.props.addReview(fark)
+		this.props.addFark(fark)
+		Actions.pop()
 	}
 
 	render() {
@@ -155,12 +157,12 @@ class FarkAdd extends Component {
 							<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 								<Text style={[{ flex: 1}, styles.label]}>Tip</Text>
 								<View style={styles.switch}>
-									<Switch onValueChange={value => this.toggleButton(value)} value={this.state.switch}/>
+									<Switch onValueChange={value => this.toggleButton(value)} value={this.state.tipStatus}/>
 								</View>
 							</View>
 						</View>
 
-						{ this.state.switch &&
+						{ this.state.tipStatus &&
 								<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 									<View style={[styles.textBox, { flex: 1 }]}>
 										<TextInput
@@ -182,10 +184,19 @@ class FarkAdd extends Component {
 								multiline
 								maxHeight={300}
 								underlineColorAndroid="transparent"
-								onChangeText={value => this.state({ note: value})}
+								onChangeText={value => this.setState({ note: value})}
 								value={this.state.note}
 								keyboardType="default"
 							/>
+						</View>
+
+						<View style={styles.blockSave}>
+							<TouchableOpacity
+								style={styles.buttonSave}
+								onPress={() => this.addFark()}
+							>
+								<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ADD</Text>
+							</TouchableOpacity>
 						</View>
 					</ScrollView>
 				</View>
@@ -280,6 +291,26 @@ const styles = StyleSheet.create({
 		color: '#616670',
 		minHeight: 100,
 		padding: 0
+	},
+	buttonSave: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		flexDirection: 'row',
+		backgroundColor: 'blue',
+		height: 50,
+		borderRadius: 3,
+		zIndex: 2
+	},
+	blockSave: {
+		marginTop: 10,
+		marginLeft: 10,
+		marginRight: 10,
+		borderTopColor: '#f1f1f1',
+		borderTopWidth: 1,
+		shadowColor: '#808080',
+		shadowOffset: { width: 0, height: 3 },
+		shadowOpacity: 0.5,
+		padding: 5
 	}
 })
 
