@@ -3,8 +3,10 @@ import { Platform, StyleSheet, ScrollView, Text, View, TextInput, Switch, Toucha
 import NavBar from '../shares/NavBar'
 import IconMaterial from 'react-native-vector-icons/MaterialIcons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { connect } from 'react-redux'
+import FarkActions from '../../redux/actions/fark'
 
-export default class FarkList extends Component {
+class FarkAdd extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -12,16 +14,17 @@ export default class FarkList extends Component {
 			shop: '',
 			deliver: '',
 			orders: [''],
+			ordersName: [],
 			switch: false,
-			tips: 0,
+			tip: 0,
 			note: ''
 		}
 	}
   
 	handleChangeOrders(property, text) {
-		const orders = this.state.orders
-		orders[property] = text
-		this.setState({ orders })
+		const ordersName = this.state.ordersName
+		ordersName[property] = text
+		this.setState({ ordersName })
 	}
   
 	toggleButton(value) {
@@ -30,8 +33,37 @@ export default class FarkList extends Component {
   
 	addOrdersBox() {
 		const orders = this.state.orders
-		orders.push({ tags: '' })
+		orders.push({ order: '' })
 		this.setState({ orders })
+	}
+
+	addFark() {
+		const ordersName = this.state.ordersName
+		for (let i=0 ; i < ordersName.length ; i++) {
+			if (ordersName[i] === undefined || ordersName[i].trim().length < 1) { 
+				ordersName.splice(i, 1)
+				i--
+			}
+		}
+		const orders = []
+		ordersName.forEach(element => {
+			orders.push({order: element, isDone: false})
+		})
+
+		const fark = {
+			title: this.state.title.trim(),
+			shop: this.state.name.trim(),
+			deliver: this.state.deliver.trim(),
+			orders: orders,
+			creater: this.props.currentUser,
+			doer: null,
+			isDone: false,
+			tipStatus: false,
+			tip: this.state.tip.trim(),
+			note: this.state.note.trim()
+		}
+		console.log(fark, 'fark')
+		// this.props.addReview(fark)
 	}
 
 	render() {
@@ -121,7 +153,7 @@ export default class FarkList extends Component {
               
 						<View style={styles.containerSwitch}>
 							<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-								<Text style={[{ flex: 1}, styles.label]}>Tips</Text>
+								<Text style={[{ flex: 1}, styles.label]}>Tip</Text>
 								<View style={styles.switch}>
 									<Switch onValueChange={value => this.toggleButton(value)} value={this.state.switch}/>
 								</View>
@@ -133,9 +165,9 @@ export default class FarkList extends Component {
 									<View style={[styles.textBox, { flex: 1 }]}>
 										<TextInput
 											style={styles.textInput}
-											value={this.state.tips}
+											value={this.state.tip}
 											underlineColorAndroid="transparent"
-											onChangeText={text => this.setState({tips: text})}
+											onChangeText={text => this.setState({tip: text})}
 											keyboardType="default"
 										/>
 									</View>
@@ -250,3 +282,15 @@ const styles = StyleSheet.create({
 		padding: 0
 	}
 })
+
+const mapStateToProps = state => ({
+	currentUser: state.userReducer.currentUser
+})
+
+const mapDispatchToProps = dispatch => ({
+	addFark: fark => {
+		dispatch(FarkActions.addFark(fark))
+	}
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(FarkAdd)

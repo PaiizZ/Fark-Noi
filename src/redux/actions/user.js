@@ -10,6 +10,7 @@ const UserActions = {
 		try {
 			const user = await auth.signInWithCredential(credential)
 			const user_obj = {
+				uid: user.uid,
 				displayName: user.displayName,
 				photoURL: user.photoURL
 				// farkList: [],
