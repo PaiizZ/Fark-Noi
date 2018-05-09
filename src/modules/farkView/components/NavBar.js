@@ -3,7 +3,8 @@ import {
 	StyleSheet,
 	Text,
 	TouchableOpacity,
-	View
+	View,
+	Alert
 } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import IconIonicons from 'react-native-vector-icons/Ionicons'
@@ -17,8 +18,17 @@ class NavBar extends Component {
 
 	optionsSelect(index) {
 		if (index === 0) {
-			this.props.deleteFark()
-			Actions.pop()
+			Alert.alert(
+				'Delete',
+				'Are you sure ?',
+				[
+					{text: 'Cancel', style: 'cancel'},
+					{text: 'OK', onPress: () => {
+						this.props.deleteFark()
+						Actions.pop()
+					}}
+				]
+			)
 		} 
 		// else if (index === 1) {
 		//  this.props.deleteReview(this.props.review._id)
