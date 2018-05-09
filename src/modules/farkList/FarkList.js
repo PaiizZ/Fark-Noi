@@ -28,44 +28,46 @@ class FarkList extends Component {
 					<List containerStyle={{ borderColor: 'transparent' }}>
 						{this.props.farks.map((fark, index) => {
 							return (
-								<ListItem
-									avatar={
-										<CoverImage size={80} uri={`${fark.creater.photoURL}`+'/picture?height=300'} />
-									}
-									containerStyle={{ borderBottomColor: 'transparent' }}
-									key={index}
-									title={fark.title}
-									titleStyle={{ fontWeight: 'bold', color: 'gray', marginLeft: 15 }}
-									titleNumberOfLines={1}
-									subtitle={
-										<View style={{ flexDirection: 'row', marginLeft: 15, bottom: 0}}>
-											<View>
-												<Text></Text>
-												<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-													<View style={{ flexDirection: 'row', marginRight: 15 }}>
-														<View style={styles.productDetailLeft}>
-															<IconEntypo name="shop" color={'gray'} size={26} />
-															<Text style={styles.productDetailText}>{fark.shop}</Text>
-														</View>
-														<View style={styles.productDetailRight}>
-															<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
-															<Text style={styles.productDetailText}>{fark.deliver}</Text>
+								!fark.doer && (
+									<ListItem
+										avatar={
+											<CoverImage size={80} uri={`${fark.creater.photoURL}`+'/picture?height=300'} />
+										}
+										containerStyle={{ borderBottomColor: 'transparent' }}
+										key={index}
+										title={fark.title}
+										titleStyle={{ fontWeight: 'bold', color: 'gray', marginLeft: 15 }}
+										titleNumberOfLines={1}
+										subtitle={
+											<View style={{ flexDirection: 'row', marginLeft: 15, bottom: 0}}>
+												<View>
+													<Text></Text>
+													<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+														<View style={{ flexDirection: 'row', marginRight: 15 }}>
+															<View style={styles.productDetailLeft}>
+																<IconEntypo name="shop" color={'gray'} size={26} />
+																<Text style={styles.productDetailText}>{fark.shop}</Text>
+															</View>
+															<View style={styles.productDetailRight}>
+																<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
+																<Text style={styles.productDetailText}>{fark.deliver}</Text>
+															</View>
 														</View>
 													</View>
 												</View>
+												{ fark.tipStatus &&(
+													<View>
+														<View style={styles.coin}>
+															<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
+														</View>
+													</View>)
+												}
 											</View>
-											{ fark.tipStatus &&(
-												<View>
-													<View style={styles.coin}>
-														<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
-													</View>
-												</View>)
-											}
-										</View>
-									}
-									hideChevron={true}
-									onPress={() => { Actions.farkView({ fark }) }}
-								/>
+										}
+										hideChevron={true}
+										onPress={() => { Actions.farkView({ fark }) }}
+									/>
+								)
 							)
 						})
 						}
