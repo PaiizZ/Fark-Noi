@@ -19,6 +19,7 @@ export default (state = initialState, action) => {
 	case constants.GET_FARKS_SUCCESS:
 		return {
 			...state,
+			loading: false,
 			farks: action.payload
 		}
         
@@ -38,6 +39,7 @@ export default (state = initialState, action) => {
 	case constants.GET_FARK_SUCCESS:
 		return {
 			...state,
+			loading: false,
 			fark: action.payload
 		}
         

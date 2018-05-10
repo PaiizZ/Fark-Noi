@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View, ScrollView, RefreshControl } from 'react-native'
 import NavBar from '../farkList/components/NavBar'
 import { List, ListItem } from 'react-native-elements'
 import CoverImage from '../shares/CoverImage'
@@ -33,7 +33,15 @@ class FarkList extends Component {
 						<NavBar titleName="FARK LIST" />
 					</View>
 				</View>
-				<View style={styles.body}>
+				<ScrollView
+					refreshControl={
+						<RefreshControl
+							refreshing={this.props.loading}
+							onRefresh={() => this.props.getFarks()}
+						/>
+					}
+					style={styles.body}
+				>
 					<List containerStyle={{ marginTop: 0, borderColor: 'transparent' }}>
 						{this.props.farks.map((fark, index) => {
 							return (
@@ -76,11 +84,12 @@ class FarkList extends Component {
 						})
 						}
 					</List>
-				</View>
+				</ScrollView>
 			</View>
 		)
 	}
 }
+
 
 const styles = StyleSheet.create({
 	container: {
@@ -123,12 +132,16 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
 	currentUser: state.userReducer.currentUser,
+	loading: state.farkReducer.loading,
 	farks: state.farkReducer.farks
 })
 
 const mapDispatchToProps = dispatch => ({
 	getCurrentFark: (key) => {
 		dispatch(FarkActions.getCurrentFark(key))
+	},
+	getFarks: () => {
+		dispatch(FarkActions.getFarks())
 	}
 })
 

@@ -44,7 +44,7 @@ class FarkAdd extends Component {
 		const titleErr = validate(['title'], [this.state.title])
 		const shopErr = validate(['shop'], [this.state.shop])
 		const deliverErr = validate(['deliver'], [this.state.deliver])
-		const orderErr = validate(['orders'], [this.state.orders])
+		const orderErr = validate(['orders'], [this.state.ordersName])
 
 		if (!titleErr && !shopErr && !deliverErr && !orderErr) {
 			const ordersName = this.state.ordersName
@@ -85,101 +85,101 @@ class FarkAdd extends Component {
 			return <View/>
 		}
 		return (
-			<KeyboardAwareScrollView
-				style={{ backgroundColor: 'white' }}
-				resetScrollToCoords={{ x: 0, y: 0 }}
-				scrollEnabled={true}
-			>
-				<View style={styles.container}>
-					<View style={styles.header}>
-						<View style={styles.platformHeader}>
-							<NavBar titleName="FARK ADD" />
+			// <KeyboardAwareScrollView
+			// 	style={{ backgroundColor: 'white' }}
+			// 	resetScrollToCoords={{ x: 0, y: 0 }}
+			// 	scrollEnabled={true}
+			// >
+			<View style={styles.container}>
+				<View style={styles.header}>
+					<View style={styles.platformHeader}>
+						<NavBar titleName="FARK ADD" />
+					</View>
+				</View>
+			
+				<ScrollView
+					showsVerticalScrollIndicator={false}
+					scrollEventThrottle={16}
+					bounces={false}
+					style={styles.body}
+				>
+					<Text style={styles.label}>
+							Title
+						<Text style={styles.fontRed}> *</Text>
+					</Text>
+					<View style={styles.textBox}>
+						<TextInput
+							style={styles.textInput}
+							value={this.state.title}
+							underlineColorAndroid="transparent"
+							onChangeText={value => this.setState({ title: value })}
+							keyboardType="default"
+						/>
+					</View>
+
+					<Text style={styles.label}>
+							Shop from
+						<Text style={styles.fontRed}> *</Text>
+					</Text>
+					<View style={styles.textBox}>
+						<TextInput
+							style={styles.textInput}
+							value={this.state.shop}
+							underlineColorAndroid="transparent"
+							onChangeText={value => this.setState({ shop: value })}
+							keyboardType="default"
+						/>
+					</View>
+						
+					<Text style={styles.label}>
+						Deliver to
+						<Text style={styles.fontRed}> *</Text>
+					</Text>
+					<View style={styles.textBox}>
+						<TextInput
+							style={styles.textInput}
+							value={this.state.deliver}
+							underlineColorAndroid="transparent"
+							onChangeText={value => this.setState({ deliver: value })}
+							keyboardType="default"
+						/>
+					</View>
+
+					<Text style={styles.label}>Order List
+						<Text style={styles.fontRed}> *</Text>
+					</Text>
+					{this.state.orders.map((item, key) => (
+						<View key={key}>
+							<View style={[styles.textBox, { marginBottom: 0 }]}>
+								<TextInput
+									style={styles.textInput}
+									value={this.state.orders[key]}
+									underlineColorAndroid="transparent"
+									onChangeText={text => this.handleChangeOrders(key, text)}
+									keyboardType="default"
+								/>
+							</View>
+							{this.state.orders.length - 1 === key && (
+								<TouchableOpacity
+									style={styles.buttonAddOrder}
+									onPress={() => this.addOrdersBox()}
+								>
+									<IconMaterial name="add-circle" size={20} />
+								</TouchableOpacity>
+							)}
+						</View>
+					))}
+              
+					<View style={styles.containerSwitch}>
+						<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+							<Text style={[{ flex: 1}, styles.label]}>Tip</Text>
+							<View style={styles.switch}>
+								<Switch onValueChange={value => this.toggleButton(value)} value={this.state.tipStatus}/>
+							</View>
 						</View>
 					</View>
-			
-					<ScrollView
-						showsVerticalScrollIndicator={false}
-						scrollEventThrottle={16}
-						bounces={false}
-						style={styles.body}
-					>
-						<Text style={styles.label}>
-							Title
-							<Text style={styles.fontRed}> *</Text>
-						</Text>
-						<View style={styles.textBox}>
-							<TextInput
-								style={styles.textInput}
-								value={this.state.title}
-								underlineColorAndroid="transparent"
-								onChangeText={value => this.setState({ title: value })}
-								keyboardType="default"
-							/>
-						</View>
 
-						<Text style={styles.label}>
-							Shop from
-							<Text style={styles.fontRed}> *</Text>
-						</Text>
-						<View style={styles.textBox}>
-							<TextInput
-								style={styles.textInput}
-								value={this.state.shop}
-								underlineColorAndroid="transparent"
-								onChangeText={value => this.setState({ shop: value })}
-								keyboardType="default"
-							/>
-						</View>
-						
-						<Text style={styles.label}>
-						Deliver to
-							<Text style={styles.fontRed}> *</Text>
-						</Text>
-						<View style={styles.textBox}>
-							<TextInput
-								style={styles.textInput}
-								value={this.state.deliver}
-								underlineColorAndroid="transparent"
-								onChangeText={value => this.setState({ deliver: value })}
-								keyboardType="default"
-							/>
-						</View>
-
-						<Text style={styles.label}>Order List
-							<Text style={styles.fontRed}> *</Text>
-						</Text>
-						{this.state.orders.map((item, key) => (
-							<View key={key}>
-								<View style={[styles.textBox, { marginBottom: 0 }]}>
-									<TextInput
-										style={styles.textInput}
-										value={this.state.orders[key]}
-										underlineColorAndroid="transparent"
-										onChangeText={text => this.handleChangeOrders(key, text)}
-										keyboardType="default"
-									/>
-								</View>
-								{this.state.orders.length - 1 === key && (
-									<TouchableOpacity
-										style={styles.buttonAddOrder}
-										onPress={() => this.addOrdersBox()}
-									>
-										<IconMaterial name="add-circle" size={20} />
-									</TouchableOpacity>
-								)}
-							</View>
-						))}
-              
-						<View style={styles.containerSwitch}>
-							<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-								<Text style={[{ flex: 1}, styles.label]}>Tip</Text>
-								<View style={styles.switch}>
-									<Switch onValueChange={value => this.toggleButton(value)} value={this.state.tipStatus}/>
-								</View>
-							</View>
-						</View>
-
-						{ this.state.tipStatus &&
+					{ this.state.tipStatus &&
 								<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 									<View style={[styles.textBox, { flex: 1 }]}>
 										<TextInput
@@ -192,32 +192,32 @@ class FarkAdd extends Component {
 									</View>
 									<Text style={[styles.label, { width: 50, alignItems: 'center', justifyContent: 'center', marginLeft: 0 }]}>Baht</Text>
 								</View>
-						}
+					}
 						
-						<Text style={styles.label}>Note</Text>
-						<View style={styles.bodyTextInput}>
-							<TextInput
-								style={styles.textInputLabel}
-								multiline
-								maxHeight={300}
-								underlineColorAndroid="transparent"
-								onChangeText={value => this.setState({ note: value})}
-								value={this.state.note}
-								keyboardType="default"
-							/>
-						</View>
+					<Text style={styles.label}>Note</Text>
+					<View style={styles.bodyTextInput}>
+						<TextInput
+							style={styles.textInputLabel}
+							multiline
+							maxHeight={300}
+							underlineColorAndroid="transparent"
+							onChangeText={value => this.setState({ note: value})}
+							value={this.state.note}
+							keyboardType="default"
+						/>
+					</View>
 
-						<View style={styles.blockSave}>
-							<TouchableOpacity
-								style={styles.buttonSave}
-								onPress={() => this.addFark()}
-							>
-								<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ADD</Text>
-							</TouchableOpacity>
-						</View>
-					</ScrollView>
-				</View>
-			</KeyboardAwareScrollView>
+					<View style={styles.blockSave}>
+						<TouchableOpacity
+							style={styles.buttonSave}
+							onPress={() => this.addFark()}
+						>
+							<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ADD</Text>
+						</TouchableOpacity>
+					</View>
+				</ScrollView>
+			</View>
+			// </KeyboardAwareScrollView> 
 		)
 	}
 }

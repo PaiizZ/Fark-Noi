@@ -70,142 +70,142 @@ class FarkView extends Component {
 		}
 		const { title, shop, deliver, note, tip, tipStatus, creater, doer, orders, isDone, comments } = this.props.fark
 		return (
-			<KeyboardAwareScrollView
-				style={{ backgroundColor: 'white' }}
-				resetScrollToCoords={{ x: 0, y: 0 }}
-				scrollEnabled={true}
-			>
-				<View style={styles.container}>
-					<View style={styles.header}>
-						<View style={styles.platformHeader}>
-							<NavBar 
-								titleName="FARK VIEW" 
-								currentUser={this.props.currentUser} 
-								creater={creater} 
-								doer={doer}
-								deleteFark={() => this.deleteFark()}
-							/>
-						</View>
+			// <KeyboardAwareScrollView
+			// 	style={{ backgroundColor: 'white' }}
+			// 	resetScrollToCoords={{ x: 0, y: 0 }}
+			// 	scrollEnabled={true}
+			// >
+			<View style={styles.container}>
+				<View style={styles.header}>
+					<View style={styles.platformHeader}>
+						<NavBar 
+							titleName="FARK VIEW" 
+							currentUser={this.props.currentUser} 
+							creater={creater} 
+							doer={doer}
+							deleteFark={() => this.deleteFark()}
+						/>
 					</View>
-					<ScrollView
-						showsVerticalScrollIndicator={false}
-						scrollEventThrottle={16}
-						bounces={false}
-						style={styles.body}
-					>
-						<Text style={styles.title}>{title}</Text>
-						<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
-							<IconEntypo style={{ marginLeft: 15 }} name="shop" color={'gray'} size={26} />
-							<Text style={styles.label}>Shop :</Text>
-							<Text style={styles.label}>{shop}</Text>
-						</View>
-						<View style={{ flexDirection: 'row', flexWrap: 'wrap'}}>
-							<MaterialCommunityIcons style={{ marginLeft: 5 }} name="cube-send" color={'gray'} size={35} />
-							<Text style={styles.label}>Deliver :</Text>
-							<Text style={styles.label}>{deliver}</Text>
-						</View>
+				</View>
+				<ScrollView
+					showsVerticalScrollIndicator={false}
+					scrollEventThrottle={16}
+					bounces={false}
+					style={styles.body}
+				>
+					<Text style={styles.title}>{title}</Text>
+					<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
+						<IconEntypo style={{ marginLeft: 15 }} name="shop" color={'gray'} size={26} />
+						<Text style={styles.label}>Shop :</Text>
+						<Text style={styles.label}>{shop}</Text>
+					</View>
+					<View style={{ flexDirection: 'row', flexWrap: 'wrap'}}>
+						<MaterialCommunityIcons style={{ marginLeft: 5 }} name="cube-send" color={'gray'} size={35} />
+						<Text style={styles.label}>Deliver :</Text>
+						<Text style={styles.label}>{deliver}</Text>
+					</View>
 
-						<Text style={styles.title}>Order List</Text>
-						{ orders.map((order, index) => { 
-							return (
-								!doer ? 
-									<View key={index}>
-										<Text style={styles.label}>   - {order.order}</Text>
-									</View>:
-									isDone ?
-										<View key={index}>
-											<View style={{ flexDirection: 'row'}}>
-												<MaterialCommunityIcons style={{ marginLeft: 20 }} name="checkbox-marked" color={'#009933'} size={30} />
-												<Text style={styles.label}>{order.order}</Text>
-											</View>
-										</View>:
-										<View key={index}>
-											<CheckBox
-												title={order.order}
-												checked={order.isDone}
-												onPress={() => this.checkBox(index)}
-											/>
-										</View>
-							) 
-						})
-						} 
-          
-						{ tipStatus &&(
-							<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
-								<Text style={styles.label}>Tip :</Text>
-								<Text style={styles.label}>{tip}   Baht</Text>
-							</View>
-						)}
-          
-						{ note.length > 0 && (
-							<View style= {{ marginTop: 15}}>
-								<Text style={styles.label}>Note</Text>
-								<Text style={[styles.label, { marginLeft: 30 }]}>{note}</Text>
-							</View>
-						)}
-				
-						{ doer && (
-							<View>
-								<Divider style={styles.divider} />
-
-								<View>
-									{ comments !== undefined ? (
-										<View>
-											{comments.map((comment, index) => {
-												return (
-													<View key={index} style={{ flexDirection: 'row', width: '95%'}}>
-														<CoverImage size={70} uri={`${comment.user.photoURL}`+'/picture?height=300'} />
-														<View style={styles.content}>
-															<Text style={styles.username}>{comment.user.displayName}</Text>
-															<Text style={styles.textLabel}>{comment.comment}</Text>
-														</View>
-													</View>
-												)
-											})}
-										</View>) : 
-										<View/>
-									}
-								</View>
-							
-								<View style={{ marginTop: 10 }}>
-									<AddCommentChat 
-										updateComment={(comments) => this.props.updateComment(this.props.fark.key, comments)}
-									/>
-								</View>
-							</View>
-
-						)}
-
-						{ this.props.currentUser.uid !== creater.uid && !isDone &&(
+					<Text style={styles.title}>Order List</Text>
+					{ orders.map((order, index) => { 
+						return (
 							!doer ? 
+								<View key={index}>
+									<Text style={styles.label}>   - {order.order}</Text>
+								</View>:
+								isDone ?
+									<View key={index}>
+										<View style={{ flexDirection: 'row'}}>
+											<MaterialCommunityIcons style={{ marginLeft: 20 }} name="checkbox-marked" color={'#009933'} size={30} />
+											<Text style={styles.label}>{order.order}</Text>
+										</View>
+									</View>:
+									<View key={index}>
+										<CheckBox
+											title={order.order}
+											checked={order.isDone}
+											onPress={() => this.checkBox(index)}
+										/>
+									</View>
+						) 
+					})
+					} 
+          
+					{ tipStatus &&(
+						<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
+							<Text style={styles.label}>Tip :</Text>
+							<Text style={styles.label}>{tip}   Baht</Text>
+						</View>
+					)}
+          
+					{ note.length > 0 && (
+						<View style= {{ marginTop: 15}}>
+							<Text style={styles.label}>Note</Text>
+							<Text style={[styles.label, { marginLeft: 30 }]}>{note}</Text>
+						</View>
+					)}
+				
+					{ doer && (
+						<View>
+							<Divider style={styles.divider} />
+
+							<View>
+								{ comments !== undefined ? (
+									<View>
+										{comments.map((comment, index) => {
+											return (
+												<View key={index} style={{ flexDirection: 'row', width: '95%'}}>
+													<CoverImage size={70} uri={`${comment.user.photoURL}`+'/picture?height=300'} />
+													<View style={styles.content}>
+														<Text style={styles.username}>{comment.user.displayName}</Text>
+														<Text style={styles.textLabel}>{comment.comment}</Text>
+													</View>
+												</View>
+											)
+										})}
+									</View>) : 
+									<View/>
+								}
+							</View>
+							
+							<View style={{ marginTop: 10 }}>
+								<AddCommentChat 
+									updateComment={(comments) => this.props.updateComment(this.props.fark.key, comments)}
+								/>
+							</View>
+						</View>
+
+					)}
+
+					{ this.props.currentUser.uid !== creater.uid && !isDone &&(
+						!doer ? 
+							<View style={styles.blockSave}>
+								<TouchableOpacity
+									style={styles.buttonSave}
+									onPress={() => this.acceptJob()}
+								>
+									<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ACCEPT</Text>
+								</TouchableOpacity>
+							</View>
+							:
+							this.checkList() ?
 								<View style={styles.blockSave}>
 									<TouchableOpacity
 										style={styles.buttonSave}
-										onPress={() => this.acceptJob()}
+										onPress={() => this.doneJob()}
 									>
-										<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ACCEPT</Text>
+										<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
 									</TouchableOpacity>
-								</View>
-								:
-								this.checkList() ?
-									<View style={styles.blockSave}>
-										<TouchableOpacity
-											style={styles.buttonSave}
-											onPress={() => this.doneJob()}
-										>
-											<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
-										</TouchableOpacity>
-									</View>:
-									<View style={styles.blockSave}>
-										<View style={styles.buttonGray}>
-											<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
-										</View>
+								</View>:
+								<View style={styles.blockSave}>
+									<View style={styles.buttonGray}>
+										<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
 									</View>
-						)
-						}	
-					</ScrollView>
-				</View>
-			</KeyboardAwareScrollView>
+								</View>
+					)
+					}	
+				</ScrollView>
+			</View>
+			// </KeyboardAwareScrollView>
 		)
 	}
 }
