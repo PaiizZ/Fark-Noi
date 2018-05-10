@@ -6,6 +6,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { connect } from 'react-redux'
 import FarkActions from '../../redux/actions/fark'
 import { Actions } from 'react-native-router-flux'
+import validate from '../../services/validate'
+import Toast from 'react-native-simple-toast'
 
 class FarkAdd extends Component {
 	constructor(props) {
@@ -39,33 +41,43 @@ class FarkAdd extends Component {
 	}
 
 	addFark() {
-		const ordersName = this.state.ordersName
-		for (let i=0 ; i < ordersName.length ; i++) {
-			if (ordersName[i] === undefined || ordersName[i].trim().length < 1) { 
-				ordersName.splice(i, 1)
-				i--
-			}
-		}
-		const orders = []
-		ordersName.forEach(element => {
-			orders.push({order: element, isDone: false})
-		})
+		const titleErr = validate(['title'], [this.state.title])
+		const shopErr = validate(['shop'], [this.state.shop])
+		const deliverErr = validate(['deliver'], [this.state.deliver])
+		const orderErr = validate(['orders'], [this.state.orders])
 
-		const fark = {
-			title: this.state.title.trim(),
-			shop: this.state.shop.trim(),
-			deliver: this.state.deliver.trim(),
-			orders: orders,
-			creater: this.props.currentUser,
-			doer: null,
-			isDone: false,
-			tipStatus: this.state.tipStatus,
-			tip: this.state.tip,
-			note: this.state.note
+		if (!titleErr && !shopErr && !deliverErr && !orderErr) {
+			const ordersName = this.state.ordersName
+			for (let i=0 ; i < ordersName.length ; i++) {
+				if (ordersName[i] === undefined || ordersName[i].trim().length < 1) { 
+					ordersName.splice(i, 1)
+					i--
+				}
+			}
+			const orders = []
+			ordersName.forEach(element => {
+				orders.push({order: element, isDone: false})
+			})
+
+			const fark = {
+				title: this.state.title,
+				shop: this.state.shop,
+				deliver: this.state.deliver,
+				orders: orders,
+				creater: this.props.currentUser,
+				doer: null,
+				isDone: false,
+				tipStatus: this.state.tipStatus,
+				tip: this.state.tip,
+				note: this.state.note
+			}
+
+			this.props.addFark(fark)
+			Actions.pop()
+
+		} else {
+			Toast.show('Please fill all request infomation', Toast.LONG)
 		}
-		console.log(fark, 'fark')
-		this.props.addFark(fark)
-		Actions.pop()
 	}
 
 	render() {
@@ -133,7 +145,9 @@ class FarkAdd extends Component {
 							/>
 						</View>
 
-						<Text style={styles.label}>Order List</Text>
+						<Text style={styles.label}>Order List
+							<Text style={styles.fontRed}> *</Text>
+						</Text>
 						{this.state.orders.map((item, key) => (
 							<View key={key}>
 								<View style={[styles.textBox, { marginBottom: 0 }]}>
