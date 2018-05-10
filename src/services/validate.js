@@ -15,18 +15,6 @@ export default function validate(fieldName, value) {
 			presence: { allowEmpty: false },
 			length: { minimum: 1, message: 'must be at least one content' }
 		},
-		// rating: {
-		// 	presence: { allowEmpty: false, message: 'field is required.' },
-		// 	numericality: {
-		// 		onlyInteger: true,
-		// 		greaterThan: 0,
-		// 		lessThanOrEqualTo: 5
-		// 	}
-		// },
-		// contentMessage: {
-		// 	presence: { allowEmpty: false },
-		// 	length: { minimum: 1, message: 'must be at least one content' }
-		// },
 		comment: {
 			presence: { allowEmpty: false, message: 'field is required.' }
 		}

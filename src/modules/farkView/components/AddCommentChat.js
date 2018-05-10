@@ -9,7 +9,8 @@ import React, { Component } from 'react'
 import CoverImage from '../../shares/CoverImage'
 import IconIonicons from 'react-native-vector-icons/Ionicons'
 import { connect } from 'react-redux'
-
+import validate from '../../../services/validate'
+import Toast from 'react-native-simple-toast'
 
 class AddCommentChat extends Component {
 	constructor(props) {
@@ -20,13 +21,18 @@ class AddCommentChat extends Component {
 	}
 
 	async addComment() {
-		let comments = []
-		if (this.props.fark.comments !== undefined) { 
-			comments = this.props.fark.comments
+		const commentErr = validate(['comment'], [this.state.comment])
+		if (!commentErr) {
+			let comments = []
+			if (this.props.fark.comments !== undefined) { 
+				comments = this.props.fark.comments
+			}
+			comments.push({user: this.props.currentUser, comment: this.state.comment})
+			await this.props.updateComment(comments)
+			this.setState({comment: ''})
+		} else {
+			Toast.show('Please fill your comment', Toast.LONG)
 		}
-		comments.push({user: this.props.currentUser, comment: this.state.comment})
-		await this.props.updateComment(comments)
-		this.setState({comment: ''})
 	}
   
 	render() {
