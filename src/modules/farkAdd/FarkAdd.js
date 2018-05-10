@@ -96,7 +96,7 @@ class FarkAdd extends Component {
 						<NavBar titleName="FARK ADD" />
 					</View>
 				</View>
-			
+
 				<ScrollView
 					showsVerticalScrollIndicator={false}
 					scrollEventThrottle={16}
