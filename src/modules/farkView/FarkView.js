@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		flexDirection: 'row',
-		backgroundColor: 'blue',
+		backgroundColor: '#388BFC',
 		height: 50,
 		width: 345,
 		borderRadius: 3,

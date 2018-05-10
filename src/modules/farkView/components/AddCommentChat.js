@@ -58,7 +58,7 @@ class AddCommentChat extends Component {
 							/>
 						</View>
 						<TouchableOpacity style={styles.buttonSend} onPress={() => this.addComment()}>
-							<IconIonicons name='md-send' size={25} color={'blue'}/>
+							<IconIonicons name='md-send' size={25} color={'#388BFC'}/>
 						</TouchableOpacity>
 					</View>
 				</View>

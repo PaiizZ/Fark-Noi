@@ -54,7 +54,7 @@ export class TabMenu extends Component {
 			<TabNavigator style={styles.container}>
 				<TabNavigator.Item
 					selected={this.state.selectedTab === 'home'}
-					selectedTitleStyle={{ color: 'blue' }}
+					selectedTitleStyle={{ color: '#388BFC' }}
 					onPress={() => {
 						this.setState({ selectedTab: 'home' })
 					}}
@@ -62,14 +62,14 @@ export class TabMenu extends Component {
 						<IconMaterialCommunity name="format-list-bulleted" size={this.px2dp(26)} color={'gray'} />
 					)}
 					renderSelectedIcon={() => (
-						<IconMaterialCommunity name="format-list-bulleted" size={this.px2dp(26)} color={'blue'} />
+						<IconMaterialCommunity name="format-list-bulleted" size={this.px2dp(26)} color={'#388BFC'} />
 					)}
 				>
 					<FarkList/>
 				</TabNavigator.Item>
 				<TabNavigator.Item
 					selected={this.state.selectedTab === 'user'}
-					selectedTitleStyle={{ color: 'blue' }}
+					selectedTitleStyle={{ color: '#388BFC' }}
 					onPress={() => {
 						this.setState({ selectedTab: 'user' })
 					}}
@@ -77,7 +77,7 @@ export class TabMenu extends Component {
 						<IconFontAwesome name="user" size={this.px2dp(22)} color={'gray'} />
 					)}
 					renderSelectedIcon={() => (
-						<IconFontAwesome name="user" size={this.px2dp(22)} color={'blue'} />
+						<IconFontAwesome name="user" size={this.px2dp(22)} color={'#388BFC'} />
 					)}
 				>
 					<UserPage/>

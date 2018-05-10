@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		flexDirection: 'row',
-		backgroundColor: 'blue',
+		backgroundColor: '#388BFC',
 		height: 50,
 		borderRadius: 3,
 		zIndex: 2

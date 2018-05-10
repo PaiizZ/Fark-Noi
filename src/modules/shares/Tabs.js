@@ -66,14 +66,14 @@ const styles = StyleSheet.create({
 		borderBottomColor: 'transparent'
 	},
 	tabContainerActive: {
-		borderBottomColor: 'blue'
+		borderBottomColor: '#388BFC'
 	},
 	tabText: {
 		color: 'gray',
 		textAlign: 'center'
 	},
 	tabTextActive: {
-		color: 'blue',
+		color: '#388BFC',
 		textAlign: 'center'
 	},
 	contentContainer: {

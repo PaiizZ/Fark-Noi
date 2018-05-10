@@ -23,7 +23,7 @@ class NavBar extends Component {
 							style={{ width: 50, alignItems: 'center', justifyContent: 'center'}} 
 							onPress={() => { Actions.farkAdd() }}
 						>
-							<IconEntypo name='plus' size={30} color={'blue'} />
+							<IconEntypo name='plus' size={30} color={'#388BFC'} />
 						</TouchableOpacity>
 					</View>
 				</View>
