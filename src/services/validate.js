@@ -11,6 +11,12 @@ export default function validate(fieldName, value) {
 		deliver: {
 			presence: { allowEmpty: false, message: 'field is required.' }
 		},
+		receive: {
+			presence: { allowEmpty: false, message: 'field is required.' }
+		},
+		send: {
+			presence: { allowEmpty: false, message: 'field is required.' }
+		},
 		orders: {
 			presence: { allowEmpty: false },
 			length: { minimum: 1, message: 'must be at least one content' }

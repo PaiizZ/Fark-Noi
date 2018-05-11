@@ -17,9 +17,9 @@ class FarkList extends Component {
 	constructor (props) {
 		super(props)
 		this.state = {
-			farkTypeDisplay: 'All',
+			farkTypeDisplay: 'All Type',
 			isFilterModalVisible: false,
-			farkType: [{name: 'All Type', selected: false}, {name: 'Buy something', selected: false}, {name: 'Need help', selected: false}]
+			farkType: [{name: 'All Type', selected: false}, {name: 'Buy something', selected: false}, {name: 'Sent something', selected: false}]
 		}
 	}
 	
@@ -52,7 +52,7 @@ class FarkList extends Component {
 		return (
 			<View style={styles.modal}>
 				<View style={styles.modalHeader}>
-					<Text style={styles.modalTitle}>Choose type of "FARK LIST"</Text>
+					<Text style={styles.modalTitle}>Choose type of FARK</Text>
 				</View>
 				{this.state.farkType.map((item, index) => (
 					<CheckBox
@@ -142,14 +142,20 @@ class FarkList extends Component {
 										titleNumberOfLines={1}
 										subtitle={
 											<View style={{ flexDirection: 'row', marginLeft: 15 }}>
-												<View style={{ }}>
-													<View style={styles.shopIcon}>
-														<IconEntypo name="shop" color={'gray'} size={26} />
-														<Text style={styles.productDetailText}>{fark.shop}</Text>
-													</View>
+												<View>
+													{fark.type === 'Buy something' ?
+														<View style={styles.shopIcon}>
+															<IconEntypo name="shop" color={'gray'} size={26} />
+															<Text style={styles.productDetailText}>{fark.shop}</Text>
+														</View> :
+														<View style={styles.shopIcon}>
+															<IconEntypo name="location" color={'gray'} size={26} />
+															<Text style={styles.productDetailText}>{fark.receive}</Text>
+														</View>
+													}
 													<View style={styles.sentIcon}>
 														<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
-														<Text style={styles.productDetailText}>{fark.deliver}</Text>
+														<Text style={styles.productDetailText}>{fark.type === 'Buy something' ? fark.deliver : fark.send}</Text>
 													</View>
 												</View>
 												{ fark.tipStatus &&(

@@ -8,6 +8,8 @@ import FarkActions from '../../redux/actions/fark'
 import { Actions } from 'react-native-router-flux'
 import validate from '../../services/validate'
 import Toast from 'react-native-simple-toast'
+import { CheckBox } from 'react-native-elements'
+import Modal from 'react-native-modal'
 
 class FarkAdd extends Component {
 	constructor(props) {
@@ -16,11 +18,17 @@ class FarkAdd extends Component {
 			title: '',
 			shop: '',
 			deliver: '',
+			receive: '',
+			send: '',
 			orders: [''],
 			ordersName: [],
 			tipStatus: false,
 			tip: 0,
-			note: ''
+			note: '',
+			farkTypeDisplay: 'Buy something',
+			isFilterModalVisible: false,
+			farkType: [{name: 'Buy something', selected: true}, {name: 'Sent something', selected: false}]
+
 		}
 	}
   
@@ -41,43 +49,116 @@ class FarkAdd extends Component {
 	}
 
 	addFark() {
-		const titleErr = validate(['title'], [this.state.title])
-		const shopErr = validate(['shop'], [this.state.shop])
-		const deliverErr = validate(['deliver'], [this.state.deliver])
-		const orderErr = validate(['orders'], [this.state.ordersName])
+		if (this.state.farkTypeDisplay === 'Buy something') {
+			const titleErr = validate(['title'], [this.state.title])
+			const shopErr = validate(['shop'], [this.state.shop])
+			const deliverErr = validate(['deliver'], [this.state.deliver])
+			const orderErr = validate(['orders'], [this.state.ordersName])
 
-		if (!titleErr && !shopErr && !deliverErr && !orderErr) {
-			const ordersName = this.state.ordersName
-			for (let i=0 ; i < ordersName.length ; i++) {
-				if (ordersName[i] === undefined || ordersName[i].trim().length < 1) { 
-					ordersName.splice(i, 1)
-					i--
+			if (!titleErr && !shopErr && !deliverErr && !orderErr) {
+				const ordersName = this.state.ordersName
+				for (let i=0 ; i < ordersName.length ; i++) {
+					if (ordersName[i] === undefined || ordersName[i].trim().length < 1) { 
+						ordersName.splice(i, 1)
+						i--
+					}
 				}
+				const orders = []
+				ordersName.forEach(element => {
+					orders.push({order: element, isDone: false})
+				})
+
+				const fark = {
+					title: this.state.title,
+					type: this.state.farkTypeDisplay,
+					shop: this.state.shop,
+					deliver: this.state.deliver,
+					orders: orders,
+					creater: this.props.currentUser,
+					isDone: false,
+					tipStatus: this.state.tipStatus,
+					tip: this.state.tip,
+					note: this.state.note
+				}
+
+				this.props.addFark(fark)
+				Actions.pop()
+
+			} else {
+				Toast.show('Please fill all request infomation', Toast.LONG)
 			}
-			const orders = []
-			ordersName.forEach(element => {
-				orders.push({order: element, isDone: false})
-			})
-
-			const fark = {
-				title: this.state.title,
-				shop: this.state.shop,
-				deliver: this.state.deliver,
-				orders: orders,
-				creater: this.props.currentUser,
-				doer: null,
-				isDone: false,
-				tipStatus: this.state.tipStatus,
-				tip: this.state.tip,
-				note: this.state.note
-			}
-
-			this.props.addFark(fark)
-			Actions.pop()
-
 		} else {
-			Toast.show('Please fill all request infomation', Toast.LONG)
+			const titleErr = validate(['title'], [this.state.title])
+			const locationErr = validate(['location'], [this.state.location])
+			const detailErr = validate(['detail'], [this.state.detail])
+
+			if (!titleErr && !locationErr && !detailErr) {
+				const fark = {
+					title: this.state.title,
+					type: this.state.farkTypeDisplay,
+					receive: this.state.receive,
+					send: this.state.send,
+					creater: this.props.currentUser,
+					isDone: false,
+					tipStatus: this.state.tipStatus,
+					tip: this.state.tip,
+					note: this.state.note
+				}
+
+				this.props.addFark(fark)
+				Actions.pop()
+
+			} else {
+				Toast.show('Please fill all request infomation', Toast.LONG)
+			}
 		}
+	}
+
+	handleFilterModal (bool) {
+		this.setState({ isFilterModalVisible: bool })
+	}
+
+	selectFarkType (index) {
+		const farkType = this.state.farkType.map((item, key) => (key === index ? { ...item, selected: true } : { ...item, selected: false }))
+		this.setState({ farkType })
+	}
+
+	chooseFarkType() {
+		const farkType = this.state.farkType.find(item => item.selected === true)
+		this.setState({ farkTypeDisplay: farkType.name })
+		this.handleFilterModal(false)
+	}
+
+	renderModal () {
+		return (
+			<View style={styles.modal}>
+				<View style={styles.modalHeader}>
+					<Text style={styles.modalTitle}>Choose type of FARK</Text>
+				</View>
+				{this.state.farkType.map((item, index) => (
+					<CheckBox
+						key={index}
+						title={item.name}
+						checkedIcon='dot-circle-o'
+						uncheckedIcon='circle-o'
+						checkedColor='#00a9ff'
+						uncheckedColor='#808080'
+						checked={item.selected}
+						containerStyle={{ backgroundColor: 'transparent', marginLeft: 0, marginRight: 0, borderWidth: 0 }}
+						textStyle={styles.textDropdown}
+						onPress={() => this.selectFarkType(index)}
+					/>
+				))}
+				<View style={styles.modalFooter}>
+					<TouchableOpacity style={styles.modalButton} onPress={() => this.handleFilterModal(false)}>
+						<Text style={styles.modalTextBtn}>ยกเลิก</Text>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.modalButton} onPress={() => this.chooseFarkType()}>
+						<Text style={styles.modalTextBtn}>ตกลง</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+		)
 	}
 
 	render() {
@@ -117,59 +198,101 @@ class FarkAdd extends Component {
 						/>
 					</View>
 
-					<Text style={styles.label}>
-							Shop from
-						<Text style={styles.fontRed}> *</Text>
-					</Text>
-					<View style={styles.textBox}>
-						<TextInput
-							style={styles.textInput}
-							value={this.state.shop}
-							underlineColorAndroid="transparent"
-							onChangeText={value => this.setState({ shop: value })}
-							keyboardType="default"
-						/>
-					</View>
-						
-					<Text style={styles.label}>
-						Deliver to
-						<Text style={styles.fontRed}> *</Text>
-					</Text>
-					<View style={styles.textBox}>
-						<TextInput
-							style={styles.textInput}
-							value={this.state.deliver}
-							underlineColorAndroid="transparent"
-							onChangeText={value => this.setState({ deliver: value })}
-							keyboardType="default"
-						/>
-					</View>
+					<Text style={styles.label}>Type of FARK</Text>
+					<TouchableOpacity style={styles.textBox} 	onPress={() => { this.handleFilterModal(true) }}>
+						<Text style={[styles.textInput, {marginTop: 10}]}>{this.state.farkTypeDisplay}</Text>
+						<Modal isVisible={this.state.isFilterModalVisible}>{this.renderModal()}</Modal>
+					</TouchableOpacity>
 
-					<Text style={styles.label}>Order List
-						<Text style={styles.fontRed}> *</Text>
-					</Text>
-					{this.state.orders.map((item, key) => (
-						<View key={key}>
-							<View style={[styles.textBox, { marginBottom: 0 }]}>
+					{ this.state.farkTypeDisplay === 'Buy something' && (
+						<View>
+							<Text style={styles.label}>
+							Shop from
+								<Text style={styles.fontRed}> *</Text>
+							</Text>
+							<View style={styles.textBox}>
 								<TextInput
 									style={styles.textInput}
-									value={this.state.orders[key]}
+									value={this.state.shop}
 									underlineColorAndroid="transparent"
-									onChangeText={text => this.handleChangeOrders(key, text)}
+									onChangeText={value => this.setState({ shop: value })}
 									keyboardType="default"
 								/>
 							</View>
-							{this.state.orders.length - 1 === key && (
-								<TouchableOpacity
-									style={styles.buttonAddOrder}
-									onPress={() => this.addOrdersBox()}
-								>
-									<IconMaterial name="add-circle" size={20} />
-								</TouchableOpacity>
-							)}
+						
+							<Text style={styles.label}>
+						Deliver to
+								<Text style={styles.fontRed}> *</Text>
+							</Text>
+							<View style={styles.textBox}>
+								<TextInput
+									style={styles.textInput}
+									value={this.state.deliver}
+									underlineColorAndroid="transparent"
+									onChangeText={value => this.setState({ deliver: value })}
+									keyboardType="default"
+								/>
+							</View>
+
+							<Text style={styles.label}>Order List
+								<Text style={styles.fontRed}> *</Text>
+							</Text>
+							{this.state.orders.map((item, key) => (
+								<View key={key}>
+									<View style={[styles.textBox, { marginBottom: 0 }]}>
+										<TextInput
+											style={styles.textInput}
+											value={this.state.orders[key]}
+											underlineColorAndroid="transparent"
+											onChangeText={text => this.handleChangeOrders(key, text)}
+											keyboardType="default"
+										/>
+									</View>
+									{this.state.orders.length - 1 === key && (
+										<TouchableOpacity
+											style={styles.buttonAddOrder}
+											onPress={() => this.addOrdersBox()}
+										>
+											<IconMaterial name="add-circle" size={20} />
+										</TouchableOpacity>
+									)}
+								</View>
+							))}
 						</View>
-					))}
-              
+					)}
+					
+					{ this.state.farkTypeDisplay === 'Sent something' && (
+						<View>
+							<Text style={styles.label}>
+							Receive Location
+								<Text style={styles.fontRed}> *</Text>
+							</Text>
+							<View style={styles.textBox}>
+								<TextInput
+									style={styles.textInput}
+									value={this.state.receive}
+									underlineColorAndroid="transparent"
+									onChangeText={value => this.setState({ receive: value })}
+									keyboardType="default"
+								/>
+							</View>
+
+							<Text style={styles.label}>
+							Sent Location
+								<Text style={styles.fontRed}> *</Text>
+							</Text>
+							<View style={styles.textBox}>
+								<TextInput
+									style={styles.textInput}
+									value={this.state.send}
+									underlineColorAndroid="transparent"
+									onChangeText={value => this.setState({ send: value })}
+									keyboardType="default"
+								/>
+							</View>
+						</View>
+					)}
+
 					<View style={styles.containerSwitch}>
 						<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 							<Text style={[{ flex: 1}, styles.label]}>Tip</Text>
@@ -193,20 +316,23 @@ class FarkAdd extends Component {
 									<Text style={[styles.label, { width: 50, alignItems: 'center', justifyContent: 'center', marginLeft: 0 }]}>Baht</Text>
 								</View>
 					}
-						
-					<Text style={styles.label}>Note</Text>
-					<View style={styles.bodyTextInput}>
-						<TextInput
-							style={styles.textInputLabel}
-							multiline
-							maxHeight={300}
-							underlineColorAndroid="transparent"
-							onChangeText={value => this.setState({ note: value})}
-							value={this.state.note}
-							keyboardType="default"
-						/>
+
+					<View>
+						<Text style={styles.label}>Note</Text>
+						<View style={styles.bodyTextInput}>
+							<TextInput
+								style={styles.textInputLabel}
+								multiline
+								maxHeight={300}
+								underlineColorAndroid="transparent"
+								onChangeText={value => this.setState({ note: value})}
+								value={this.state.note}
+								keyboardType="default"
+							/>
+						</View>
 					</View>
 
+				
 					<View style={styles.blockSave}>
 						<TouchableOpacity
 							style={styles.buttonSave}
@@ -328,6 +454,42 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 3 },
 		shadowOpacity: 0.5,
 		padding: 5
+	},
+	textDropdown: {
+		color: '#212b36',
+		fontSize: 15,
+		paddingRight: 15
+	},
+	modal: {
+		backgroundColor: 'white',
+		padding: 15,
+		borderRadius: 2,
+		borderColor: 'rgba(0, 0, 0, 0.1)',
+		flexDirection: 'column'
+	},
+	modalHeader: {
+		height: 58,
+		justifyContent: 'center'
+	},
+	modalTitle: {
+		fontSize: 18,
+		fontWeight: 'bold',
+		color: '#000'
+	},
+	modalFooter: {
+		height: 50,
+		flexDirection: 'row',
+		justifyContent: 'flex-end'
+	},
+	modalButton: {
+		marginLeft: 10,
+		width: 70,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	modalTextBtn: {
+		color: '#00a9ff',
+		fontSize: 15
 	}
 })
 
