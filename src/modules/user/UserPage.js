@@ -80,14 +80,20 @@ class UserPage extends Component {
 													titleNumberOfLines={1}
 													subtitle={
 														<View style={{ flexDirection: 'row', marginLeft: 15 }}>
-															<View style={{ }}>
-																<View style={styles.shopIcon}>
-																	<IconEntypo name="shop" color={'gray'} size={26} />
-																	<Text style={styles.productDetailText}>{fark.shop}</Text>
-																</View>
+															<View>
+																{fark.type === 'Buy something' ?
+																	<View style={styles.shopIcon}>
+																		<IconEntypo name="shop" color={'gray'} size={26} />
+																		<Text style={styles.productDetailText}>{fark.shop}</Text>
+																	</View> :
+																	<View style={styles.shopIcon}>
+																		<IconEntypo name="location" color={'gray'} size={26} />
+																		<Text style={styles.productDetailText}>{fark.receive}</Text>
+																	</View>
+																}
 																<View style={styles.sentIcon}>
 																	<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
-																	<Text style={styles.productDetailText}>{fark.deliver}</Text>
+																	<Text style={styles.productDetailText}>{fark.type === 'Buy something' ? fark.deliver : fark.send}</Text>
 																</View>
 															</View>
 															{fark.isDone ?
@@ -130,14 +136,20 @@ class UserPage extends Component {
 													titleNumberOfLines={1}
 													subtitle={
 														<View style={{ flexDirection: 'row', marginLeft: 15 }}>
-															<View style={{ }}>
-																<View style={styles.shopIcon}>
-																	<IconEntypo name="shop" color={'gray'} size={26} />
-																	<Text style={styles.productDetailText}>{fark.shop}</Text>
-																</View>
+															<View>
+																{fark.type === 'Buy something' ?
+																	<View style={styles.shopIcon}>
+																		<IconEntypo name="shop" color={'gray'} size={26} />
+																		<Text style={styles.productDetailText}>{fark.shop}</Text>
+																	</View> :
+																	<View style={styles.shopIcon}>
+																		<IconEntypo name="location" color={'gray'} size={26} />
+																		<Text style={styles.productDetailText}>{fark.receive}</Text>
+																	</View>
+																}
 																<View style={styles.sentIcon}>
 																	<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
-																	<Text style={styles.productDetailText}>{fark.deliver}</Text>
+																	<Text style={styles.productDetailText}>{fark.type === 'Buy something' ? fark.deliver : fark.send}</Text>
 																</View>
 															</View>
 															{fark.isDone ?
