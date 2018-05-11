@@ -131,45 +131,47 @@ class FarkList extends Component {
 						{this.props.farks.map((fark, index) => {
 							return (
 								!fark.doer && (
-									<ListItem
-										avatar={
-											<CoverImage size={80} uri={`${fark.creater.photoURL}`+'/picture?height=300'} />
-										}
-										containerStyle={{ borderBottomColor: 'transparent' }}
-										key={index}
-										title={fark.title}
-										titleStyle={{ fontWeight: 'bold', color: 'gray', marginLeft: 15 }}
-										titleNumberOfLines={1}
-										subtitle={
-											<View style={{ flexDirection: 'row', marginLeft: 15 }}>
-												<View>
-													{fark.type === 'Buy something' ?
-														<View style={styles.shopIcon}>
-															<IconEntypo name="shop" color={'gray'} size={26} />
-															<Text style={styles.productDetailText}>{fark.shop}</Text>
-														</View> :
-														<View style={styles.shopIcon}>
-															<IconEntypo name="location" color={'gray'} size={26} />
-															<Text style={styles.productDetailText}>{fark.receive}</Text>
+									(fark.type === this.state.farkTypeDisplay || this.state.farkTypeDisplay === 'All Type') && (
+										<ListItem
+											avatar={
+												<CoverImage size={80} uri={`${fark.creater.photoURL}`+'/picture?height=300'} />
+											}
+											containerStyle={{ borderBottomColor: 'transparent' }}
+											key={index}
+											title={fark.title}
+											titleStyle={{ fontWeight: 'bold', color: 'gray', marginLeft: 15 }}
+											titleNumberOfLines={1}
+											subtitle={
+												<View style={{ flexDirection: 'row', marginLeft: 15 }}>
+													<View>
+														{fark.type === 'Buy something' ?
+															<View style={styles.shopIcon}>
+																<IconEntypo name="shop" color={'gray'} size={26} />
+																<Text style={styles.productDetailText}>{fark.shop}</Text>
+															</View> :
+															<View style={styles.shopIcon}>
+																<IconEntypo name="location" color={'gray'} size={26} />
+																<Text style={styles.productDetailText}>{fark.receive}</Text>
+															</View>
+														}
+														<View style={styles.sentIcon}>
+															<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
+															<Text style={styles.productDetailText}>{fark.type === 'Buy something' ? fark.deliver : fark.send}</Text>
 														</View>
-													}
-													<View style={styles.sentIcon}>
-														<MaterialCommunityIcons name="cube-send" color={'gray'} size={35} />
-														<Text style={styles.productDetailText}>{fark.type === 'Buy something' ? fark.deliver : fark.send}</Text>
 													</View>
+													{ fark.tipStatus &&(
+														<View style={{ flex: 1}}>
+															<View style={styles.coin}>
+																<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
+															</View>
+														</View>)
+													}
 												</View>
-												{ fark.tipStatus &&(
-													<View style={{ flex: 1}}>
-														<View style={styles.coin}>
-															<MaterialCommunityIcons name="coin" color={'#FFB61E'} size={50} />
-														</View>
-													</View>)
-												}
-											</View>
-										}
-										hideChevron={true}
-										onPress={() => this.goToViewFarkPage(fark) }
-									/>
+											}
+											hideChevron={true}
+											onPress={() => this.goToViewFarkPage(fark) }
+										/>
+									)
 								)
 							)
 						})
