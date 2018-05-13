@@ -65,10 +65,11 @@ class FarkView extends Component {
 	}
   
 	render() {
+		console.log(this.props.fark, 'fark')
 		if (!this.props.currentUser || !this.props.fark) {
 			return <View/>
 		}
-		const { title, shop, deliver, note, tip, tipStatus, creater, doer, orders, isDone, comments } = this.props.fark
+		const { title, shop, deliver, note, tip, tipStatus, creater, doer, orders, isDone, comments, type, send, receive } = this.props.fark
 		return (
 			// <KeyboardAwareScrollView
 			// 	style={{ backgroundColor: 'white' }}
@@ -94,42 +95,55 @@ class FarkView extends Component {
 					style={styles.body}
 				>
 					<Text style={styles.title}>{title}</Text>
-					<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
-						<IconEntypo style={{ marginLeft: 15 }} name="shop" color={'gray'} size={26} />
-						<Text style={styles.label}>Shop :</Text>
-						<Text style={styles.label}>{shop}</Text>
-					</View>
+					{ type === 'Buy something' ? (
+						<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
+							<IconEntypo style={{ marginLeft: 15 }} name="shop" color={'gray'} size={26} />
+							<Text style={styles.label}>Shop :</Text>
+							<Text style={styles.label}>{shop}</Text>
+						</View>
+					) : (
+						<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
+							<IconEntypo style={{ marginLeft: 15 }} name="location" color={'gray'} size={26} />
+							<Text style={styles.label}>Receive :</Text>
+							<Text style={styles.label}>{receive}</Text>
+						</View>
+					)}
+					
 					<View style={{ flexDirection: 'row', flexWrap: 'wrap'}}>
 						<MaterialCommunityIcons style={{ marginLeft: 5 }} name="cube-send" color={'gray'} size={35} />
-						<Text style={styles.label}>Deliver :</Text>
-						<Text style={styles.label}>{deliver}</Text>
+						<Text style={styles.label}>{type === 'Buy something' ? 'Deliver :' : 'Sent :'}</Text>
+						<Text style={styles.label}>{type === 'Buy something' ? deliver : send}</Text>
 					</View>
 
-					<Text style={styles.title}>Order List</Text>
-					{ orders.map((order, index) => { 
-						return (
-							!doer ? 
-								<View key={index}>
-									<Text style={styles.label}>   - {order.order}</Text>
-								</View>:
-								isDone ?
-									<View key={index}>
-										<View style={{ flexDirection: 'row'}}>
-											<MaterialCommunityIcons style={{ marginLeft: 20 }} name="checkbox-marked" color={'#009933'} size={30} />
-											<Text style={styles.label}>{order.order}</Text>
-										</View>
-									</View>:
-									<View key={index}>
-										<CheckBox
-											title={order.order}
-											checked={order.isDone}
-											onPress={() => this.checkBox(index)}
-										/>
-									</View>
-						) 
-					})
-					} 
-          
+					{ type === 'Buy something' &&(
+						<View>
+							<Text style={styles.title}>Order List</Text>
+							{ orders.map((order, index) => { 
+								return (
+									!doer ? 
+										<View key={index}>
+											<Text style={styles.label}>   - {order.order}</Text>
+										</View>:
+										isDone ?
+											<View key={index}>
+												<View style={{ flexDirection: 'row'}}>
+													<MaterialCommunityIcons style={{ marginLeft: 20 }} name="checkbox-marked" color={'#009933'} size={30} />
+													<Text style={styles.label}>{order.order}</Text>
+												</View>
+											</View>:
+											<View key={index}>
+												<CheckBox
+													title={order.order}
+													checked={order.isDone}
+													onPress={() => this.checkBox(index)}
+												/>
+											</View>
+								) 
+							})
+							} 
+						</View>)
+					}
+
 					{ tipStatus &&(
 						<View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 15}}>
 							<Text style={styles.label}>Tip :</Text>
