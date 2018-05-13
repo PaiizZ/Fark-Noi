@@ -189,35 +189,35 @@ class FarkView extends Component {
 						</View>
 
 					)}
-
-					{ this.props.currentUser.uid !== creater.uid && !isDone &&(
-						!doer ? 
+					<View style={{height: 60, bottom: 0}}/>
+				</ScrollView>
+				{ this.props.currentUser.uid !== creater.uid && !isDone &&(
+					!doer ? 
+						<View style={styles.blockSave}>
+							<TouchableOpacity
+								style={styles.buttonSave}
+								onPress={() => this.acceptJob()}
+							>
+								<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ACCEPT</Text>
+							</TouchableOpacity>
+						</View>
+						:
+						this.checkList() ?
 							<View style={styles.blockSave}>
 								<TouchableOpacity
 									style={styles.buttonSave}
-									onPress={() => this.acceptJob()}
+									onPress={() => this.doneJob()}
 								>
-									<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>ACCEPT</Text>
+									<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
 								</TouchableOpacity>
-							</View>
-							:
-							this.checkList() ?
-								<View style={styles.blockSave}>
-									<TouchableOpacity
-										style={styles.buttonSave}
-										onPress={() => this.doneJob()}
-									>
-										<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
-									</TouchableOpacity>
-								</View>:
-								<View style={styles.blockSave}>
-									<View style={styles.buttonGray}>
-										<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
-									</View>
+							</View>:
+							<View style={styles.blockSave}>
+								<View style={styles.buttonGray}>
+									<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>DONE</Text>
 								</View>
-					)
-					}	
-				</ScrollView>
+							</View>
+				)
+				}	
 			</View>
 			// </KeyboardAwareScrollView>
 		)
@@ -279,8 +279,8 @@ const styles = StyleSheet.create({
 	},
 	blockSave: {
 		flex: 1,
-		// position: 'absolute',
-		// bottom: 0,
+		position: 'absolute',
+		bottom: 0,
 		marginLeft: 10,
 		marginRight: 10,
 		borderTopColor: '#f1f1f1',
